@@ -62,7 +62,9 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="20dp"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="avatar, published"/>
+        app:constraint_referenced_ids="avatar, published"
+
+        />
 
     <TextView
         android:id="@+id/main_text"
@@ -151,7 +153,8 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="image_likes, likes_count,
         image_repost, repost_count, image_viewing,viewing_count"
-        tools:visibility="visible" />
+        tools:visibility="visible"
+        />
 
     <View
         android:id="@+id/line_1"
