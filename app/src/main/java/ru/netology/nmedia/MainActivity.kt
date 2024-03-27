@@ -50,25 +50,22 @@ class MainActivity : AppCompatActivity() {
                 likes.setImageResource(
                     if(post.likedByMe) {
                         R.drawable.heart_like_red_20
-                        newNumber = intLikeCount + 1
-
+                        newNumber = intLikeCount + 1  // 1 вариант
 
                     } else {
                         R.drawable.heart_like_20
-                        newNumber = intLikeCount - 1
+                        newNumber = intLikeCount - 1  // 1 вариант
                     }
+
                 )
-               likesCount = println(shortNote(intLikeCount))
+
+                    //newNumber = if (post.likedByMe) intLikeCount + 1 else intLikeCount - 1  // 2 вариант
+
+                likesCount = shortNote(newNumber)
 
             }
-
         }
-
     }
-
-
-
-
 }
 
 fun shortNote(int : Int) : String {
@@ -84,3 +81,4 @@ fun shortNote(int : Int) : String {
         }
     }
 }
+
