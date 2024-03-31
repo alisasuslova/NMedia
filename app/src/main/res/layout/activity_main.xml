@@ -96,7 +96,7 @@
 
     <TextView
         android:id="@+id/likesCount"
-        android:layout_width="40dp"
+        android:layout_width="35dp"
         android:layout_height="wrap_content"
         android:text="@string/likes_count"
         android:layout_marginStart="5dp"

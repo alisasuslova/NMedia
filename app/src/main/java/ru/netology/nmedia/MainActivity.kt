@@ -2,17 +2,19 @@ package ru.netology.nmedia
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import java.math.BigDecimal
 import java.math.RoundingMode
 
 data class Post(
-    val id : Long,
-    val author : String,
-    val content : String,
-    val published : String,
-    var likedByMe : Boolean = false
+    val id: Long,
+    val author: String,
+    val content: String,
+    val published: String,
+    var likedByMe: Boolean = false
 )
+
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,53 +31,73 @@ class MainActivity : AppCompatActivity() {
                     "        целиться выше, бежать быстрее. Наша миссия — помочь встать на путь роста и начать цепочку\n" +
                     "        перемен → http://netolo.gy/fyb",
             published = "21 мая в 18:36",
-            likedByMe  = false
+            likedByMe = false
         )
+
 
 
         with(binding) {
             author.text = post.author
             published.text = post.published
             content.text = post.content
-            var likesCountVar = likesCount.text
-            val intLikeCount = (likesCountVar.toString()).toInt()
+
+            val intLikeCount = likesCount.text.toString().toInt()
             var newNumber: Int
+
+            val repostCoun = repostCount.text.toString().toInt()
+            var newrepostCoun: Int
 
             if (post.likedByMe) {
                 likes?.setImageResource(R.drawable.heart_like_red_20)
             }
-            likes?.setOnClickListener{
+            likes?.setOnClickListener {
                 post.likedByMe = !post.likedByMe
                 likes.setImageResource(
-                    if(post.likedByMe) {
-                        newNumber = intLikeCount + 1  // 1 вариант
-                        likesCountVar = shortNote(newNumber)
+                    if (post.likedByMe) {
+                        newNumber = intLikeCount + 1
+                        likesCount.text = shortNote(newNumber)
                         R.drawable.heart_like_red_20
                     } else {
-                        newNumber = intLikeCount - 1  // 1 вариант
-                        likesCountVar = shortNote(newNumber)
+                        newNumber = intLikeCount - 1
+                        likesCount.text = shortNote(newNumber)
                         R.drawable.heart_like_20
                     }
-
                 )
-
-                    //newNumber = if (post.likedByMe) intLikeCount + 1 else intLikeCount - 1  // 2 вариант
-
-                likesCount.text = likesCountVar
-
             }
+
+            repost?.setOnClickListener {
+                    newrepostCoun = repostCoun + 1
+                    repostCount.text = shortNote(newrepostCoun)
+            }
+
+            root.setOnClickListener {
+                println("root")
+            }
+
+            likes.setOnClickListener {
+                println("likes")
+            }
+
+            avatar.setOnClickListener {
+                println("avatar")
+            }
+
+            /*content.setOnClickListener {
+                println("text")
+            }*/
         }
+
     }
 }
 
-fun shortNote(int : Int) : String {
+fun shortNote(int: Int): String {
 
-    val temp : BigDecimal = int.toBigDecimal().divide(1_000.toBigDecimal())
-    val temp1 : BigDecimal = int.toBigDecimal().divide(1_000_000.toBigDecimal())
+    val temp: BigDecimal = int.toBigDecimal().divide(1_000.toBigDecimal())
+    val temp1: BigDecimal = int.toBigDecimal().divide(1_000_000.toBigDecimal())
 
     return when (int) {
         in 1..999 -> int.toString()
-        in 1000..999_999-> String.format("%.1f", temp.setScale(1, RoundingMode.FLOOR)) + "K"
+        in 1000..999_999 -> String.format("%.1f", temp.setScale(1, RoundingMode.FLOOR)) + "K"
         else -> {
             String.format("%.1f", temp1.setScale(1, RoundingMode.FLOOR)) + "M"
         }
