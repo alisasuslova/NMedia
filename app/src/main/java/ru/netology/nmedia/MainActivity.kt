@@ -1,6 +1,5 @@
 package ru.netology.nmedia
 
-import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import ru.netology.nmedia.databinding.ActivityMainBinding
@@ -38,8 +37,8 @@ class MainActivity : AppCompatActivity() {
             author.text = post.author
             published.text = post.published
             content.text = post.content
-            var likesCount = likesCount.text
-            val intLikeCount = (likesCount.toString()).toInt()
+            var likesCountVar = likesCount.text
+            val intLikeCount = (likesCountVar.toString()).toInt()
             var newNumber: Int
 
             if (post.likedByMe) {
@@ -49,19 +48,20 @@ class MainActivity : AppCompatActivity() {
                 post.likedByMe = !post.likedByMe
                 likes.setImageResource(
                     if(post.likedByMe) {
-                        R.drawable.heart_like_red_20
                         newNumber = intLikeCount + 1  // 1 вариант
-
+                        likesCountVar = shortNote(newNumber)
+                        R.drawable.heart_like_red_20
                     } else {
-                        R.drawable.heart_like_20
                         newNumber = intLikeCount - 1  // 1 вариант
+                        likesCountVar = shortNote(newNumber)
+                        R.drawable.heart_like_20
                     }
 
                 )
 
                     //newNumber = if (post.likedByMe) intLikeCount + 1 else intLikeCount - 1  // 2 вариант
 
-                likesCount = shortNote(newNumber)
+                likesCount.text = likesCountVar
 
             }
         }
