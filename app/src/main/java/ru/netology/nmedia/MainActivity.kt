@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
                     repostCount.text = shortNote(newrepostCoun)
             }
 
-            root.setOnClickListener {
+            /*root.setOnClickListener {
                 println("root")
             }
 
@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
                 println("avatar")
             }
 
-            /*content.setOnClickListener {
+            content.setOnClickListener {
                 println("text")
             }*/
         }
