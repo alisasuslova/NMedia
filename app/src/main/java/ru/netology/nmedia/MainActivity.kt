@@ -66,11 +66,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             repost?.setOnClickListener {
-                    newrepostCoun = repostCoun + 1
-                    repostCount.text = shortNote(newrepostCoun)
+                newrepostCoun = repostCoun + 1
+                repostCount.text = shortNote(newrepostCoun)
             }
 
-            
             /*root.setOnClickListener {
                 println("root")
             }
@@ -104,4 +103,5 @@ fun shortNote(int: Int): String {
         }
     }
 }
+
 
