@@ -70,6 +70,7 @@ class MainActivity : AppCompatActivity() {
                     repostCount.text = shortNote(newrepostCoun)
             }
 
+            
             /*root.setOnClickListener {
                 println("root")
             }
