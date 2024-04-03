@@ -12,7 +12,10 @@ data class Post(
     val author: String,
     val content: String,
     val published: String,
-    var likedByMe: Boolean = false
+    var likedByMe: Boolean = false,
+    var likes: Int = 10999,
+//    var likes: Int = 10_500,
+    var shares: Int = 6
 )
 
 class MainActivity : AppCompatActivity() {
@@ -35,17 +38,13 @@ class MainActivity : AppCompatActivity() {
         )
 
 
-
         with(binding) {
             author.text = post.author
             published.text = post.published
             content.text = post.content
 
-            val intLikeCount = likesCount.text.toString().toInt()
-            var newNumber: Int
-
-            val repostCoun = repostCount.text.toString().toInt()
-            var newrepostCoun: Int
+            likesCount.text = post.likes.toString()
+            repostCount.text = post.shares.toString()
 
             if (post.likedByMe) {
                 likes?.setImageResource(R.drawable.heart_like_red_20)
@@ -54,37 +53,20 @@ class MainActivity : AppCompatActivity() {
                 post.likedByMe = !post.likedByMe
                 likes.setImageResource(
                     if (post.likedByMe) {
-                        newNumber = intLikeCount + 1
-                        likesCount.text = shortNote(newNumber)
+                        post.likes++
                         R.drawable.heart_like_red_20
                     } else {
-                        newNumber = intLikeCount - 1
-                        likesCount.text = shortNote(newNumber)
+                        post.likes--
                         R.drawable.heart_like_20
                     }
                 )
+                likesCount.text = shortNote(post.likes)
             }
 
             repost?.setOnClickListener {
-                newrepostCoun = repostCoun + 1
-                repostCount.text = shortNote(newrepostCoun)
+                repostCount.text = shortNote(post.shares++)
             }
 
-            /*root.setOnClickListener {
-                println("root")
-            }
-
-            likes.setOnClickListener {
-                println("likes")
-            }
-
-            avatar.setOnClickListener {
-                println("avatar")
-            }
-
-            content.setOnClickListener {
-                println("text")
-            }*/
         }
 
     }
@@ -93,13 +75,15 @@ class MainActivity : AppCompatActivity() {
 fun shortNote(int: Int): String {
 
     val temp: BigDecimal = int.toBigDecimal().divide(1_000.toBigDecimal())
-    val temp1: BigDecimal = int.toBigDecimal().divide(1_000_000.toBigDecimal())
+    val temp1: BigDecimal = int.toBigDecimal().divide(1_000.toBigDecimal())
+    val temp2: BigDecimal = int.toBigDecimal().divide(1_000_000.toBigDecimal())
 
     return when (int) {
         in 1..999 -> int.toString()
-        in 1000..999_999 -> String.format("%.1f", temp.setScale(1, RoundingMode.FLOOR)) + "K"
+        in 1_000..9_999 -> String.format("%.1f", temp.setScale(1, RoundingMode.FLOOR)) + "K"
+        in 10_000..999_999 -> String.format("%.0f", temp1.setScale(0, RoundingMode.FLOOR)) + "K"
         else -> {
-            String.format("%.1f", temp1.setScale(1, RoundingMode.FLOOR)) + "M"
+            String.format("%.1f", temp2.setScale(1, RoundingMode.FLOOR)) + "M"
         }
     }
 }
