@@ -67,7 +67,7 @@
         />
 
     <TextView
-        android:id="@+id/main_text"
+        android:id="@+id/content"
         android:autoLink="web"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -82,10 +82,10 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="20dp"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="main_text"/>
+        app:constraint_referenced_ids="content" />
 
     <ImageView
-        android:id="@+id/image_likes"
+        android:id="@+id/likes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -95,49 +95,49 @@
          />
 
     <TextView
-        android:id="@+id/likes_count"
-        android:layout_width="20dp"
+        android:id="@+id/likesCount"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:text="@string/likes_count"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
-        app:layout_constraintStart_toEndOf="@id/image_likes"
+        app:layout_constraintStart_toEndOf="@id/likes"
         app:layout_constraintTop_toBottomOf="@id/second_barrier" />
 
     <ImageView
-        android:id="@+id/image_repost"
+        android:id="@+id/repost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginStart="10dp"
-        app:layout_constraintStart_toEndOf="@id/likes_count"
+        app:layout_constraintStart_toEndOf="@id/likesCount"
         app:layout_constraintTop_toBottomOf="@id/second_barrier"
         app:srcCompat="@drawable/repost_20"
         />
 
     <TextView
-        android:id="@+id/repost_count"
+        android:id="@+id/repostCount"
         android:layout_width="20dp"
         android:layout_height="wrap_content"
         android:text="@string/repost_count"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
-        app:layout_constraintStart_toEndOf="@id/image_repost"
+        app:layout_constraintStart_toEndOf="@id/repost"
         app:layout_constraintTop_toBottomOf="@id/second_barrier" />
 
     <ImageView
-        android:id="@+id/image_viewing"
+        android:id="@+id/viewing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        app:layout_constraintEnd_toStartOf="@id/viewing_count"
+        app:layout_constraintEnd_toStartOf="@id/viewingCount"
         app:layout_constraintTop_toBottomOf="@id/second_barrier"
         app:srcCompat="@drawable/viewing_20"
         />
 
     <TextView
-        android:id="@+id/viewing_count"
+        android:id="@+id/viewingCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -146,23 +146,22 @@
         app:layout_constraintTop_toBottomOf="@id/second_barrier" />
 
     <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/third_barrier"
+        android:id="@+id/thirdBarrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="20dp"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="image_likes, likes_count,
-        image_repost, repost_count, image_viewing,viewing_count"
-        tools:visibility="visible"
-        />
+        app:constraint_referenced_ids="likes, likesCount,
+        repost, repostCount, viewing,viewingCount"
+        tools:visibility="visible" />
 
-    <View
+    <!--<View
         android:id="@+id/line_1"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        app:layout_constraintTop_toBottomOf="@id/third_barrier"
+        app:layout_constraintTop_toBottomOf="@id/thirdBarrier"
         android:layout_marginTop="5dp"
-        android:background="@color/line_1"/>
+        android:background="@color/line_1"/>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
