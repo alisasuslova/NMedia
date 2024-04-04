@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
             likesCount.text = shortNote(post.likes)
             repostCount.text = shortNote(post.shares)
-            
+
             if (post.likedByMe) {
                 likes?.setImageResource(R.drawable.heart_like_red_20)
             }
