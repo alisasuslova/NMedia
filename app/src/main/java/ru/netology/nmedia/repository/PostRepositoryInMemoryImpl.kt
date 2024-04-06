@@ -21,7 +21,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
     override fun get(): LiveData<Post> = data
     override fun like() {
 
-        var localLikesCount = post.likes
+        /*var localLikesCount = post.likes
 
         if (post.likedByMe) {
             post = post.copy(likes = localLikesCount - 1)
@@ -29,7 +29,16 @@ class PostRepositoryInMemoryImpl : PostRepository {
             post = post.copy(likes = localLikesCount + 1)
         }
 
-        post = post.copy(likedByMe = !post.likedByMe)
+        post = post.copy(likedByMe = !post.likedByMe)*/
+
+        post = post.copy(
+            likedByMe = !post.likedByMe,
+            likes = if (post.likedByMe) {
+                post.likes - 1
+            } else {
+                post.likes + 1
+            }
+        )
 
         data.value = post
     }
@@ -40,21 +49,4 @@ class PostRepositoryInMemoryImpl : PostRepository {
         data.value = post
     }
 }
-
-/*
-fun shortNote(int: Int): String {
-
-    val temp: BigDecimal = int.toBigDecimal().divide(1_000.toBigDecimal())
-    val temp1: BigDecimal = int.toBigDecimal().divide(1_000.toBigDecimal())
-    val temp2: BigDecimal = int.toBigDecimal().divide(1_000_000.toBigDecimal())
-
-    return when (int) {
-        in 1..999 -> int.toString()
-        in 1_000..9_999 -> String.format("%.1f", temp.setScale(1, RoundingMode.FLOOR)) + "K"
-        in 10_000..999_999 -> String.format("%.0f", temp1.setScale(0, RoundingMode.FLOOR)) + "K"
-        else -> {
-            String.format("%.1f", temp2.setScale(1, RoundingMode.FLOOR)) + "M"
-        }
-    }
-}*/
 

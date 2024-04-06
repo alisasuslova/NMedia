@@ -21,8 +21,8 @@ class MainActivity : AppCompatActivity() {
                 author.text = post.author
                 published.text = post.published
                 content.text = post.content
-                likesCount.text = post.likes.toString()
-                sharesCount.text = post.shares.toString()
+                likesCount.text = shortNote(post.likes)
+                sharesCount.text = shortNote(post.shares)
 
                 likes.setImageResource(
                     if (post.likedByMe) R.drawable.heart_like_red_20 else R.drawable.heart_like_20
