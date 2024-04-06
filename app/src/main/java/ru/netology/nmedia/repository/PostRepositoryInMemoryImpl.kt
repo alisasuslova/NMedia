@@ -28,7 +28,9 @@ class PostRepositoryInMemoryImpl : PostRepository {
             } else {
                 post = post.copy(likes = localLikesCount + 1)
             }
-        post = post.copy(likedByMe = !post.likedByMe) //мб здесь изменение числовых значений
+
+        post = post.copy(likedByMe = !post.likedByMe)
+
         data.value = post
     }
 
@@ -39,6 +41,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
     }
 }
 
+/*
 fun shortNote(int: Int): String {
 
     val temp: BigDecimal = int.toBigDecimal().divide(1_000.toBigDecimal())
@@ -53,4 +56,4 @@ fun shortNote(int: Int): String {
             String.format("%.1f", temp2.setScale(1, RoundingMode.FLOOR)) + "M"
         }
     }
-}
+}*/
