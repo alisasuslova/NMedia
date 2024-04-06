@@ -3,20 +3,21 @@ package ru.netology.nmedia
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import ru.netology.nmedia.databinding.ActivityMainBinding
+import ru.netology.nmedia.viewmodel.PostViewModel
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-data class Post(
+/*data class Post(
     val id: Long,
     val author: String,
     val content: String,
     val published: String,
     var likedByMe: Boolean = false,
     var likes: Int = 10999,
-//    var likes: Int = 10_500,
     var shares: Int = 6
-)
+)*/
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         var binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val post = Post(
+        /*val post = Post(
             id = 1,
             author = "Нетология. Университет интернет-профессий будущего",
             content = "Привет, это новая Нетология! Когда-то Нетология начиналась с\n" +
@@ -67,12 +68,27 @@ class MainActivity : AppCompatActivity() {
                 repostCount.text = shortNote(post.shares++)
             }
 
-        }
+        }*/
 
+
+        val viewModel: PostViewModel by viewModels()
+        viewModel.data.observe(this) { post ->
+            with(binding) {
+                author.text = post.author
+                published.text = post.published
+                content.text = post.content
+                likes.setImageResource(
+                    if (post.likedByMe) R.drawable.heart_like_red_20 else R.drawable.heart_like_20
+                )
+            }
+        }
+        binding.likes.setOnClickListener {
+            viewModel.like()
+        }
     }
 }
 
-fun shortNote(int: Int): String {
+/*fun shortNote(int: Int): String {
 
     val temp: BigDecimal = int.toBigDecimal().divide(1_000.toBigDecimal())
     val temp1: BigDecimal = int.toBigDecimal().divide(1_000.toBigDecimal())
@@ -86,5 +102,5 @@ fun shortNote(int: Int): String {
             String.format("%.1f", temp2.setScale(1, RoundingMode.FLOOR)) + "M"
         }
     }
-}
+}*/
 
