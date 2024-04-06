@@ -20,6 +20,14 @@ class PostRepositoryInMemoryImpl : PostRepository {
 
     override fun get(): LiveData<Post> = data
     override fun like() {
+
+        var localLikesCount = post.likes
+
+            if (post.likedByMe) {
+                post = post.copy(likes = localLikesCount - 1)
+            } else {
+                post = post.copy(likes = localLikesCount + 1)
+            }
         post = post.copy(likedByMe = !post.likedByMe) //мб здесь изменение числовых значений
         data.value = post
     }
