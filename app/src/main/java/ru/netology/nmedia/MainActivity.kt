@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel: PostViewModel by viewModels()
         viewModel.data.observe(this) { posts ->
+            binding.container.removeAllViews()
             posts.map {post ->
                 CardPostBinding.inflate(layoutInflater, binding.container, true).apply {
                     author.text = post.author
