@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import ru.netology.nmedia.databinding.ActivityMainBinding
+import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.viewmodel.PostViewModel
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -16,25 +17,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val viewModel: PostViewModel by viewModels()
-        viewModel.data.observe(this) { post ->
-            with(binding) {
-                author.text = post.author
-                published.text = post.published
-                content.text = post.content
-                likesCount.text = shortNote(post.likes)
-                sharesCount.text = shortNote(post.shares)
-
-                likes.setImageResource(
-                    if (post.likedByMe) R.drawable.heart_like_red_20 else R.drawable.heart_like_20
-                )
+        viewModel.data.observe(this) { posts ->
+            posts.map {post ->
+                CardPostBinding.inflate(layoutInflater, binding.container, true).apply {
+                    author.text = post.author
+                    published.text = post.published
+                    content.text = post.content
+                    likes.setImageResource(
+                        if (post.likedByMe) R.drawable.heart_like_red_20 else R.drawable.heart_like_20
+                    )
+                    likes.setOnClickListener {
+                        viewModel.likeById(post.id)
+                    }
+                }.root
             }
-        }
-        binding.likes.setOnClickListener {
-            viewModel.like()
-        }
-
-        binding.shares.setOnClickListener {
-            viewModel.share()
         }
     }
 }
