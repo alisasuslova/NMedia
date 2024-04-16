@@ -88,7 +88,12 @@ class PostRepositoryInMemoryImpl : PostRepository {
         post = post.copy(shares = localSharesCount + 1)
         data.value = post
     }*/
-    
+    override fun share(id: Long) {
+        posts = posts.map {
+            if(it.id != id) it else it.copy(/*sharesByMe = true,*/ shares = it.shares + 1)
+        }
+        data.value = posts
+    }
 
 }
 

@@ -39,12 +39,17 @@ class PostViewHolder(
             likes.setImageResource(
                 if (post.likedByMe) R.drawable.heart_like_red_20 else R.drawable.heart_like_20
             )
-            /*if (post.likedByMe) {
-                likes.setImageResource(R.drawable.ic_liked_24)
-            }*/
             likes.setOnClickListener{
                 onLikeListener(post)
             }
+            shares.setOnClickListener{
+                onLikeListener(post)
+            }
+            /*shares.setOnClickListener{
+                if(post.sharesByMe) sharesCount.text.toString() + 1
+                onLikeListener(post)
+            }*/
+
         }
     }
 }
