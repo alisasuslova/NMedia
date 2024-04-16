@@ -1,4 +1,5 @@
-package ru.netology.nmedia.activity
+//package ru.netology.nmedia.activity
+package ru.netology.nmedia
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding.list.adapter = adapter
         viewModel.data.observe(this) { posts ->
-            adapter.list = posts
+            adapter.submitList(posts)
         }
     }
 }

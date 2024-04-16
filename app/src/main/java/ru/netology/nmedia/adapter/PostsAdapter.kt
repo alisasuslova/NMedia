@@ -2,6 +2,8 @@ package ru.netology.nmedia.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
@@ -9,12 +11,7 @@ import ru.netology.nmedia.dto.Post
 
 typealias OnLikeListener = (post: Post) -> Unit
 
-class PostsAdapter(private val onLikeListener: OnLikeListener) : RecyclerView.Adapter<PostViewHolder>() {
-    var list = emptyList<Post>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+class PostsAdapter(private val onLikeListener: OnLikeListener) : ListAdapter<Post, PostViewHolder>(PostDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -22,11 +19,10 @@ class PostsAdapter(private val onLikeListener: OnLikeListener) : RecyclerView.Ad
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        val post = list[position]
-        holder.bind(post)
+        holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int = list.size
+
 }
 
 class PostViewHolder(
@@ -38,6 +34,8 @@ class PostViewHolder(
             author.text = post.author
             published.text = post.published
             content.text = post.content
+            likesCount.text = post.likes.toString()
+            sharesCount.text = post.shares.toString()
             likes.setImageResource(
                 if (post.likedByMe) R.drawable.heart_like_red_20 else R.drawable.heart_like_20
             )
@@ -50,3 +48,15 @@ class PostViewHolder(
         }
     }
 }
+
+object PostDiffUtil: DiffUtil.ItemCallback<Post>() {
+    override fun areItemsTheSame(oldItem: Post, newItem: Post) = oldItem.id == newItem.id // проверка на id элемента
+
+
+
+
+    override fun areContentsTheSame(oldItem: Post, newItem: Post) = oldItem == newItem
+        //проверка на равенство элементов
+
+    }
+
