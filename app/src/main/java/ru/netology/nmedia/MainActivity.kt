@@ -20,6 +20,9 @@ class MainActivity : AppCompatActivity() {
             },
             { posts ->
                 viewModel.shareById(posts.id)
+            },
+            { posts ->
+                viewModel.removeById(posts.id)
             }
         )
 

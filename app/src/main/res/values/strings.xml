@@ -12,5 +12,7 @@
     <string name="likes_count" translatable="false">1000</string>
     <string name="repost_count" translatable="false">5</string>
     <string name="viewing_count" translatable="false">5</string>
+    <string name="menu_remove">Remove</string>
+    <string name="menu_edit">Edit</string>
 
 </resources>
