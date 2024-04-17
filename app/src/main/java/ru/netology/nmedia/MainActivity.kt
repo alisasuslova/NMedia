@@ -1,4 +1,3 @@
-//package ru.netology.nmedia.activity
 package ru.netology.nmedia
 
 import android.os.Bundle
@@ -15,10 +14,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val viewModel: PostViewModel by viewModels()
-        val adapter = PostsAdapter {
-            viewModel.likeById(it.id)
-            viewModel.share(it.id)
-        }
+        val adapter = PostsAdapter(
+            { posts ->
+                viewModel.likeById(posts.id)
+            },
+            { posts ->
+                viewModel.shareById(posts.id)
+            }
+        )
+
+
         binding.list.adapter = adapter
         viewModel.data.observe(this) { posts ->
             adapter.submitList(posts)

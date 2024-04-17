@@ -10,24 +10,27 @@ import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
 
 typealias OnLikeListener = (post: Post) -> Unit
+typealias OnShareListener = (post: Post) -> Unit
 
-class PostsAdapter(private val onLikeListener: OnLikeListener) : ListAdapter<Post, PostViewHolder>(PostDiffUtil) {
+class PostsAdapter(
+    private val onLikeListener: OnLikeListener,
+    private val onShareListener: OnShareListener
+) : ListAdapter<Post, PostViewHolder>(PostDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostViewHolder(binding, onLikeListener)
+        return PostViewHolder(binding, onLikeListener, onShareListener)
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
-
-
 }
 
 class PostViewHolder(
     private val binding: CardPostBinding,
-    private val onLikeListener: OnLikeListener
+    private val onLikeListener: OnLikeListener,
+    private val onShareListener: OnShareListener
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(post: Post) {
         binding.apply {
@@ -39,29 +42,21 @@ class PostViewHolder(
             likes.setImageResource(
                 if (post.likedByMe) R.drawable.heart_like_red_20 else R.drawable.heart_like_20
             )
-            likes.setOnClickListener{
+            likes.setOnClickListener {
                 onLikeListener(post)
             }
-            shares.setOnClickListener{
-                onLikeListener(post)
+            shares.setOnClickListener {
+                onShareListener(post)
             }
-            /*shares.setOnClickListener{
-                if(post.sharesByMe) sharesCount.text.toString() + 1
-                onLikeListener(post)
-            }*/
-
         }
     }
 }
 
-object PostDiffUtil: DiffUtil.ItemCallback<Post>() {
-    override fun areItemsTheSame(oldItem: Post, newItem: Post) = oldItem.id == newItem.id // проверка на id элемента
-
-
-
+object PostDiffUtil : DiffUtil.ItemCallback<Post>() {
+    override fun areItemsTheSame(oldItem: Post, newItem: Post) =
+        oldItem.id == newItem.id // проверка на id элемента
 
     override fun areContentsTheSame(oldItem: Post, newItem: Post) = oldItem == newItem
-        //проверка на равенство элементов
-
-    }
+    //проверка на равенство элементов
+}
 
