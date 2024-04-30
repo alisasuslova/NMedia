@@ -109,7 +109,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
                     published = "now"
                 )
             ) + posts
-        } else {  // если нет, ищем совпадение по id и заменяем текст в посте через копию
+        } else { // если нет, ищем совпадение по id и заменяем текст в посте через копию
             posts.map{ if (it.id == post.id) it.copy(content = post.content) else it}
         }
             data.value = posts

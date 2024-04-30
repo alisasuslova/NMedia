@@ -35,5 +35,9 @@ class PostViewModel : ViewModel() {
         edited.value = post
     }
     fun removeById(id: Long) = repository.removeById(id)
+
+    fun editCancel() {
+        edited.value = empty
+    }
 }
 

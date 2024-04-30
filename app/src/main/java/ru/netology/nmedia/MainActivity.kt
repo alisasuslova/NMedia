@@ -1,6 +1,7 @@
 package ru.netology.nmedia
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -52,7 +53,9 @@ class MainActivity : AppCompatActivity() {
         viewModel.edited.observe(this) {
             if (it.id != 0L) {
                 binding.content.setText(it.content)
+                binding.editText2.setText(it.content)
                 binding.content.focusAndShowKeyboard()
+                binding.editGroup.visibility = View.VISIBLE
             }
         }
 
@@ -67,7 +70,16 @@ class MainActivity : AppCompatActivity() {
 
             binding.content.setText("") //чтобы поле для ввода текста отличаалось после добаления поста
             binding.content.clearFocus() // убирает мигающий курсор
+            binding.editGroup.visibility = View.GONE
             AndroidUtils.hideKeyboard(binding.content) // убирает клавиатуру после добавления поста
+        }
+
+        binding.cansel.setOnClickListener {
+            binding.content.setText("")
+            binding.content.clearFocus()
+            binding.editGroup.visibility = View.GONE
+            viewModel.editCancel()
+            AndroidUtils.hideKeyboard(binding.content)
         }
     }
 }
