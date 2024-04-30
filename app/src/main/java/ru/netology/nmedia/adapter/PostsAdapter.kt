@@ -17,11 +17,6 @@ interface OnInteractionListener {
     fun onRemove(post: Post) {}
 }
 
-
-//typealias OnLikeListener = (post: Post) -> Unit
-//typealias OnShareListener = (post: Post) -> Unit // !!!!!
-//typealias OnRemoveListener = (post: Post) -> Unit
-
 class PostsAdapter(
     private val onInteractionListener: OnInteractionListener
 ) : ListAdapter<Post, PostViewHolder>(PostDiffUtil) {

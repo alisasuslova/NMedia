@@ -99,8 +99,9 @@ class PostRepositoryInMemoryImpl : PostRepository {
     }
 
     override fun save(post: Post) {
-        if (post.id == 0L) {
-            posts = listOf(
+
+            posts =  if (post.id == 0L) { //если d поста 0 - создаем новый
+                listOf(
                 post.copy(
                     id = nextId++,
                     author = "Me",
@@ -108,9 +109,12 @@ class PostRepositoryInMemoryImpl : PostRepository {
                     published = "now"
                 )
             ) + posts
+        } else {  // если нет, ищем совпадение по id и заменяем текст в посте через копию
+            posts.map{ if (it.id == post.id) it.copy(content = post.content) else it}
+        }
             data.value = posts
             return
-        }
+
     }
 }
 
