@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
             }
             viewModel.changeContentAndSave(content)
 
-            binding.content.setText("") //чтобы поле для ввода текста отчищалось после добаления поста
+            binding.content.setText("") //чтобы поле для ввода текста отличаалось после добаления поста
             binding.content.clearFocus() // убирает мигающий курсор
             AndroidUtils.hideKeyboard(binding.content) // убирает клавиатуру после добавления поста
         }
