@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.AppTheme.LikeButton"
+        parent="Widget.MaterialComponents.CompoundCheckBox">
+        <item name="iconTint">@color/colorLike</item>
+    </style>
+
+    <style name="Widget.MaterialComponents.CompoundCheckBox"
+        parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="enforceMaterialTheme">true</item>
+        <item name="useMaterialThemeColors">true</item>
+        <item name="android:minWidth">?attr/minTouchTargetSize</item>
+        <item name="android:minHeight">?attr/minTouchTargetSize</item>
+    </style>
+
+</resources>
