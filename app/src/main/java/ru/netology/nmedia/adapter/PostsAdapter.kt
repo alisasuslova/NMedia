@@ -40,7 +40,8 @@ class PostViewHolder(
             author.text = post.author
             published.text = post.published
             content.text = post.content
-            likesCount.text = post.likes.toString()
+            //likesCount.text = post.likes.toString()
+            likes.text = post.likes.toString()
             sharesCount.text = post.shares.toString()
 
             likes.isChecked = post.likedByMe
