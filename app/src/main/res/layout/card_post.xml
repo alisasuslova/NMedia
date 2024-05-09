@@ -46,15 +46,27 @@
 
         />
 
-    <ImageView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/menu"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/baseline_more_vert_24"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:icon="@drawable/baseline_more_vert_24"
+        android:contentDescription="@string/description_post_menu"
         android:background="@android:color/transparent"
+        style="@style/Widget.AppTheme.LikeCheckBox"
         />
+
+<!--    <ImageView-->
+<!--        android:id="@+id/menu"-->
+<!--        android:layout_width="24dp"-->
+<!--        android:layout_height="24dp"-->
+<!--        android:src="@drawable/baseline_more_vert_24"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:background="@android:color/transparent"-->
+<!--        />-->
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/main_barrier"
@@ -137,6 +149,7 @@
     app:layout_constraintStart_toEndOf="@id/likes"
     app:layout_constraintTop_toBottomOf="@id/second_barrier"
     app:icon="@drawable/repost_20"
+    android:contentDescription="@string/description_post_shares"
     tools:checked="@sample/posts.json/data/likedByMe"
     tools:text="@sample/posts.json/data/shares"
     style="@style/Widget.AppTheme.LikeCheckBox"
