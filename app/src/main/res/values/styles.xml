@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Widget.AppTheme.LikeButton"
-        parent="Widget.MaterialComponents.CompoundCheckBox">
+    <style name="Widget.AppTheme.LikeCheckBox"
+        parent="Widget.MaterialComponents.CompoundButton.CheckBox">
         <item name="iconTint">@color/colorLike</item>
     </style>
 
-    <style name="Widget.MaterialComponents.CompoundCheckBox"
+    <style name="Widget.MaterialComponents.CompoundButton.CheckBox"
         parent="Widget.AppCompat.CompoundButton.CheckBox">
         <item name="enforceMaterialTheme">true</item>
         <item name="useMaterialThemeColors">true</item>
