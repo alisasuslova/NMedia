@@ -42,7 +42,7 @@ class PostViewHolder(
             content.text = post.content
             //likesCount.text = post.likes.toString()
             likes.text = post.likes.toString()
-            sharesCount.text = post.shares.toString()
+            shares.text = post.shares.toString()
 
             likes.isChecked = post.likedByMe
             /*likes.setImageResource(

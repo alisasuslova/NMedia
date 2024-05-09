@@ -130,28 +130,38 @@
         style="@style/Widget.AppTheme.LikeCheckBox"
         />
 
+<com.google.android.material.button.MaterialButton
+    android:id="@+id/shares"
+    android:layout_width="wrap_content"
+    android:layout_height="48dp"
+    app:layout_constraintStart_toEndOf="@id/likes"
+    app:layout_constraintTop_toBottomOf="@id/second_barrier"
+    app:icon="@drawable/repost_20"
+    tools:checked="@sample/posts.json/data/likedByMe"
+    tools:text="@sample/posts.json/data/shares"
+    style="@style/Widget.AppTheme.LikeCheckBox"
+    />
 
+<!--    <ImageView-->
+<!--        android:id="@+id/shares"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="5dp"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        app:layout_constraintStart_toEndOf="@id/likes"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/second_barrier"-->
+<!--        app:srcCompat="@drawable/repost_20"-->
+<!--        />-->
 
-    <ImageView
-        android:id="@+id/shares"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="10dp"
-        app:layout_constraintStart_toEndOf="@id/likes"
-        app:layout_constraintTop_toBottomOf="@id/second_barrier"
-        app:srcCompat="@drawable/repost_20"
-        />
-
-    <TextView
-        android:id="@+id/sharesCount"
-        android:layout_width="20dp"
-        android:layout_height="wrap_content"
-        android:text="@string/repost_count"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintStart_toEndOf="@id/shares"
-        app:layout_constraintTop_toBottomOf="@id/second_barrier" />
+<!--    <TextView-->
+<!--        android:id="@+id/sharesCount"-->
+<!--        android:layout_width="20dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/repost_count"-->
+<!--        android:layout_marginStart="5dp"-->
+<!--        android:layout_marginTop="5dp"-->
+<!--        app:layout_constraintStart_toEndOf="@id/shares"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/second_barrier" />-->
 
     <ImageView
         android:id="@+id/viewing"
@@ -180,7 +190,7 @@
         android:layout_marginVertical="20dp"
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="likes,
-        shares, sharesCount, viewing,viewingCount"
+         viewing,viewingCount"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
