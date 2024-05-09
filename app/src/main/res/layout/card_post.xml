@@ -112,7 +112,7 @@
         app:layout_constraintTop_toBottomOf="@id/second_barrier"
         android:button="@drawable/heart_like_20"
         android:contentDescription="Like"
-        style="Widget.AppTheme.LikeCheckBox"
+        style="@style/Widget.AppTheme.LikeCheckBox"
 
         />
 

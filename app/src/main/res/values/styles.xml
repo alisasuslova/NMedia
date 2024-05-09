@@ -3,7 +3,7 @@
 
     <style name="Widget.AppTheme.LikeCheckBox"
         parent="Widget.MaterialComponents.CompoundButton.CheckBox">
-        <item name="iconTint">@color/colorLike</item>
+        <item name="buttonTint">@color/likes_checkbox_tint</item>
     </style>
 
     <style name="Widget.MaterialComponents.CompoundButton.CheckBox"
