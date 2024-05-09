@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:drawable="@drawable/heart_like_red_20"
+        android:state_checked="true"
+        />
+<!--    во всех остальных случаях-->
+    <item
+        android:drawable="@drawable/heart_like_20"
+        />
+</selector>

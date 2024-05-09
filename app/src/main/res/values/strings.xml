@@ -15,6 +15,9 @@
     <string name="menu_remove">Remove</string>
     <string name="menu_edit">Edit</string>
     <string name="description_post_save">Save</string>
+    <string name="description_post_like">Like</string>
+    <string name="description_post_shares">Shares</string>
+    <string name="description_post_menu">Menu</string>
     <string name="error_empty_content">Контент не может быть пустым</string>
 
 </resources>

@@ -6,4 +6,7 @@
     <string name="menu_edit">Изменить</string>
     <string name="description_post_save">Сохранить</string>
     <string name="error_empty_content">Контент не может быть пустым</string>
+    <string name="description_post_like">Лайк</string>
+    <string name="description_post_menu">Меню</string>
+    <string name="description_post_shares">Поделиться</string>
 </resources>
