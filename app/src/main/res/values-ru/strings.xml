@@ -9,4 +9,5 @@
     <string name="description_post_like">Лайк</string>
     <string name="description_post_menu">Меню</string>
     <string name="description_post_shares">Поделиться</string>
+    <string name="description_post_viewing">Просмотры</string>
 </resources>
