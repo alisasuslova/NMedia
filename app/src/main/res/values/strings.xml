@@ -20,5 +20,6 @@
     <string name="description_post_menu">Menu</string>
     <string name="description_post_viewing">Viewing</string>
     <string name="error_empty_content">Контент не может быть пустым</string>
+    <string name="chooser_share_post">chooser_share_post</string>
 
 </resources>
