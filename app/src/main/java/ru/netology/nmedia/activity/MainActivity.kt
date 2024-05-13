@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.launch
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import ru.netology.nmedia.R
@@ -22,6 +23,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val viewModel: PostViewModel by viewModels()
+
+        //регистрация контракта
+        val newPostLauncher = registerForActivityResult(NewPostContract) {
+            val result = it ?: return@registerForActivityResult
+            viewModel.changeContentAndSave(result)
+        }
+
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onLike(post: Post) {
                 viewModel.likeById(post.id)
@@ -64,17 +72,18 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.edited.observe(this) {
-            if (it.id != 0L) {
-                binding.content.setText(it.content)
-                binding.editText2.setText(it.content)
-                binding.content.focusAndShowKeyboard()
-                binding.editGroup.visibility = View.VISIBLE
-            }
-        }
+//TODO
+//        viewModel.edited.observe(this) {
+//            if (it.id != 0L) {
+//                binding.content.setText(it.content)
+//                binding.editText2.setText(it.content)
+//                binding.content.focusAndShowKeyboard()
+//                binding.editGroup.visibility = View.VISIBLE
+//            }
+//        }
 
         binding.save.setOnClickListener {
-            val content = binding.content.text.toString()
+            /*val content = binding.content.text.toString()
 
             if (content.isBlank()) {
                 Toast.makeText(this, R.string.error_empty_content, Toast.LENGTH_SHORT).show()
@@ -85,16 +94,20 @@ class MainActivity : AppCompatActivity() {
             binding.content.setText("") //чтобы поле для ввода текста отличаалось после добаления поста
             binding.content.clearFocus() // убирает мигающий курсор
             binding.editGroup.visibility = View.GONE
-            AndroidUtils.hideKeyboard(binding.content) // убирает клавиатуру после добавления поста
+            AndroidUtils.hideKeyboard(binding.content) // убирает клавиатуру после добавления поста*/
+
+
+            newPostLauncher.launch()
         }
 
-        binding.cansel.setOnClickListener {
-            binding.content.setText("")
-            binding.content.clearFocus()
-            binding.editGroup.visibility = View.GONE
-            viewModel.editCancel()
-            AndroidUtils.hideKeyboard(binding.content)
-        }
+//TODO
+//        binding.cansel.setOnClickListener {
+//            binding.content.setText("")
+//            binding.content.clearFocus()
+//            binding.editGroup.visibility = View.GONE
+//            viewModel.editCancel()
+//            AndroidUtils.hideKeyboard(binding.content)
+//        }
     }
 }
 

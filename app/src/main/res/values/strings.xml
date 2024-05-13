@@ -21,5 +21,6 @@
     <string name="description_post_viewing">Viewing</string>
     <string name="error_empty_content">Error empty content</string>
     <string name="chooser_share_post">Share post</string>
+    <string name="post_text">Post text</string>
 
 </resources>
