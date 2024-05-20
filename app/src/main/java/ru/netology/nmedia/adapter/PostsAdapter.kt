@@ -3,10 +3,13 @@ package ru.netology.nmedia.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.activity.result.launch
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.R
+import ru.netology.nmedia.activity.EditPostContract
+import ru.netology.nmedia.activity.NewPostContract
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
 
@@ -29,12 +32,21 @@ class PostsAdapter(
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
+
+
 }
 
 class PostViewHolder(
     private val binding: CardPostBinding,
     private val onInteractionListener: OnInteractionListener,
 ) : RecyclerView.ViewHolder(binding.root) {
+
+    //регистрация контракта на редактирование
+    val editPostLauncher = registerForActivityResult(EditPostContract) {
+        val result = it ?: return@registerForActivityResult
+        viewModel.changeContentAndSave(result)
+    }
+
     fun bind(post: Post) {
         binding.apply {
             author.text = post.author
@@ -42,6 +54,9 @@ class PostViewHolder(
             content.text = post.content
             likes.text = post.likes.toString()
             shares.text = post.shares.toString()
+
+
+
 
             likes.isChecked = post.likedByMe
             /*likes.setImageResource(
@@ -59,7 +74,8 @@ class PostViewHolder(
                     setOnMenuItemClickListener {item ->
                         when(item.itemId) {
                             R.id.edit -> {
-                                onInteractionListener.onEdit(post)
+                                //onInteractionListener.onEdit(post)
+                                editPostLauncher.launch(content.text) //!!!!!! запуск Activity на редактирование + сам текст
                                 true
                             }
                             R.id.remove -> {

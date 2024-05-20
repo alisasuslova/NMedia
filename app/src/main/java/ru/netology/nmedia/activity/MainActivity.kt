@@ -100,6 +100,8 @@ class MainActivity : AppCompatActivity() {
             newPostLauncher.launch()
         }
 
+
+
 //TODO
 //        binding.cansel.setOnClickListener {
 //            binding.content.setText("")
