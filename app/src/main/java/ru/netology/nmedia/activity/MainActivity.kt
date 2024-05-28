@@ -107,32 +107,41 @@ class MainActivity : AppCompatActivity() {
             }
         }*/
 
-        /*binding.save.setOnClickListener {
-            *//*val content = binding.content.text.toString()
-
-            if (content.isBlank()) {
-                Toast.makeText(this, R.string.error_empty_content, Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            viewModel.changeContentAndSave(content)
-
-            binding.content.setText("") //чтобы поле для ввода текста отличаалось после добаления поста
-            binding.content.clearFocus() // убирает мигающий курсор
-            binding.editGroup.visibility = View.GONE
-            AndroidUtils.hideKeyboard(binding.content) // убирает клавиатуру после добавления поста*//*
-
-
+        binding.save.setOnClickListener {
             newPostLauncher.launch()
-        }
+}
 
-        binding.menu_edit.setOnClickListener{
-            val intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                type = "text/plain"
-                putExtra(Intent.EXTRA_TEXT, post.content)
-            }
-            editPostLauncher.launch(intent)
-        }*/
+
+
+
+/*binding.save.setOnClickListener {
+    *//*val content = binding.content.text.toString()
+
+    if (content.isBlank()) {
+        Toast.makeText(this, R.string.error_empty_content, Toast.LENGTH_SHORT).show()
+        return@setOnClickListener
+    }
+    viewModel.changeContentAndSave(content)
+
+    binding.content.setText("") //чтобы поле для ввода текста отличаалось после добаления поста
+    binding.content.clearFocus() // убирает мигающий курсор
+    binding.editGroup.visibility = View.GONE
+    AndroidUtils.hideKeyboard(binding.content) // убирает клавиатуру после добавления поста*/
+
+/*
+
+
+    newPostLauncher.launch()
+}
+
+binding.menu_edit.setOnClickListener{
+    val intent = Intent().apply {
+        action = Intent.ACTION_SEND
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, post.content)
+    }
+    editPostLauncher.launch(intent)
+}*/
 
 
 
@@ -145,6 +154,6 @@ class MainActivity : AppCompatActivity() {
 //            viewModel.editCancel()
 //            AndroidUtils.hideKeyboard(binding.content)
 //        }
-    }
+}
 }
 

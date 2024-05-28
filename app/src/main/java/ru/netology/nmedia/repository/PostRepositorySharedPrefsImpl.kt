@@ -117,6 +117,7 @@ class PostRepositorySharedPrefsImpl(
             )
         }
         data.value = posts
+        sync()
     }
 
     override fun shareById(id: Long) {
@@ -124,11 +125,13 @@ class PostRepositorySharedPrefsImpl(
             if (it.id != id) it else it.copy(shares = it.shares + 1)
         }
         data.value = posts
+        sync()
     }
 
     override fun removeById(id: Long) {
         posts = posts.filterNot { it.id == id }
         data.value = posts
+        sync()
     }
 
     override fun save(post: Post) {
@@ -146,6 +149,7 @@ class PostRepositorySharedPrefsImpl(
             posts.map{ if (it.id == post.id) it.copy(content = post.content) else it}
         }
             data.value = posts
+        sync()
             return
 
     }
