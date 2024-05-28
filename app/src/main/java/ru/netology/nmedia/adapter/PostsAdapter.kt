@@ -41,13 +41,7 @@ class PostViewHolder(
     private val onInteractionListener: OnInteractionListener,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    //регистрация контракта на редактирование
-    val editPostLauncher = registerForActivityResult(EditPostContract) {
-        val result = it ?: return@registerForActivityResult
-        viewModel.changeContentAndSave(result)
-    }
-
-    fun bind(post: Post) {
+        fun bind(post: Post) {
         binding.apply {
             author.text = post.author
             published.text = post.published
@@ -74,8 +68,7 @@ class PostViewHolder(
                     setOnMenuItemClickListener {item ->
                         when(item.itemId) {
                             R.id.edit -> {
-                                //onInteractionListener.onEdit(post)
-                                editPostLauncher.launch(content.text) //!!!!!! запуск Activity на редактирование + сам текст
+                                onInteractionListener.onEdit(post)
                                 true
                             }
                             R.id.remove -> {
