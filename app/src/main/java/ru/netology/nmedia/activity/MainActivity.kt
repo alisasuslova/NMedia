@@ -24,11 +24,18 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel: PostViewModel by viewModels()
 
-        //регистрация контракта
+        //регистрация контракта на создание нового поста
         val newPostLauncher = registerForActivityResult(NewPostContract) {
             val result = it ?: return@registerForActivityResult
             viewModel.changeContentAndSave(result)
         }
+
+        //регистрация контракта на редактирование
+        val editPostLauncher = registerForActivityResult(EditPostContract) {
+            val result = it ?: return@registerForActivityResult
+            viewModel.changeContentAndSave(result)
+        }
+
 
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onLike(post: Post) {
@@ -82,8 +89,26 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        }
 
-        binding.save.setOnClickListener {
-            /*val content = binding.content.text.toString()
+        viewModel.edited.observe(this) {
+            val postText = this.content
+            if (it.id != 0L) {
+                binding.save.setOnClickListener{
+                    newPostLauncher.launch()
+                }
+            } else {
+                binding.save.setOnClickListener{
+                    val intent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        type = "text/plain"
+                        putExtra(Intent.EXTRA_TEXT, postText.toString())
+                    }
+                    editPostLauncher.launch(intent.toString())
+                }
+            }
+        }
+
+        /*binding.save.setOnClickListener {
+            *//*val content = binding.content.text.toString()
 
             if (content.isBlank()) {
                 Toast.makeText(this, R.string.error_empty_content, Toast.LENGTH_SHORT).show()
@@ -94,11 +119,21 @@ class MainActivity : AppCompatActivity() {
             binding.content.setText("") //чтобы поле для ввода текста отличаалось после добаления поста
             binding.content.clearFocus() // убирает мигающий курсор
             binding.editGroup.visibility = View.GONE
-            AndroidUtils.hideKeyboard(binding.content) // убирает клавиатуру после добавления поста*/
+            AndroidUtils.hideKeyboard(binding.content) // убирает клавиатуру после добавления поста*//*
 
 
             newPostLauncher.launch()
         }
+
+        binding.menu_edit.setOnClickListener{
+            val intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, post.content)
+            }
+            editPostLauncher.launch(intent)
+        }*/
+
 
 
 
