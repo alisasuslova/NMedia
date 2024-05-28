@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        }
 
-        viewModel.edited.observe(this) {
+        /*viewModel.edited.observe(this) {
             val postText = this.content
             if (it.id != 0L) {
                 binding.save.setOnClickListener{
@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity() {
                     editPostLauncher.launch(intent.toString())
                 }
             }
-        }
+        }*/
 
         /*binding.save.setOnClickListener {
             *//*val content = binding.content.text.toString()
