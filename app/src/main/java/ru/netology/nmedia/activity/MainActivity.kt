@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-//TODO
+
 //        viewModel.edited.observe(this) {
 //            if (it.id != 0L) {
 //                binding.content.setText(it.content)
@@ -131,7 +131,7 @@ binding.menu_edit.setOnClickListener{
 }*/
 
 
-//TODO
+
 //        binding.cansel.setOnClickListener {
 //            binding.content.setText("")
 //            binding.content.clearFocus()
