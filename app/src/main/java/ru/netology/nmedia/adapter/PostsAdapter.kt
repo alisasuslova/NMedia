@@ -48,10 +48,6 @@ class PostViewHolder(
             content.text = post.content
             likes.text = post.likes.toString()
             shares.text = post.shares.toString()
-
-
-
-
             likes.isChecked = post.likedByMe
             /*likes.setImageResource(
                 if (post.likedByMe) R.drawable.heart_like_red_20 else R.drawable.heart_like_20
@@ -69,7 +65,6 @@ class PostViewHolder(
                         when(item.itemId) {
                             R.id.edit -> {
                                 onInteractionListener.onEdit(post)
-
                                 true
                             }
                             R.id.remove -> {
