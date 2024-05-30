@@ -69,6 +69,7 @@ class PostViewHolder(
                         when(item.itemId) {
                             R.id.edit -> {
                                 onInteractionListener.onEdit(post)
+
                                 true
                             }
                             R.id.remove -> {

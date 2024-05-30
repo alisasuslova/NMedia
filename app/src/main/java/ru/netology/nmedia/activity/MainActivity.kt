@@ -51,7 +51,8 @@ class MainActivity : AppCompatActivity() {
                     putExtra(Intent.EXTRA_TEXT, post.content)
                 }
                 //больше выбор приложений
-                val shareIntent = Intent.createChooser(intent, getString(R.string.chooser_share_post))
+                val shareIntent =
+                    Intent.createChooser(intent, getString(R.string.chooser_share_post))
                 startActivity(shareIntent)
 
                 // добавить подсчет количества!
@@ -89,52 +90,45 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        }
 
-        viewModel.edited.observe(this) {
-            val postText = this.content
-            if (it.id != 0L) {
-                binding.save.setOnClickListener{
-                    newPostLauncher.launch()
-                }
-            } else {
-                binding.save.setOnClickListener{
-                    val intent = Intent().apply {
-                        action = Intent.ACTION_SEND
-                        type = "text/plain"
-                        putExtra(Intent.EXTRA_TEXT, postText.toString())
-                    }
-                    editPostLauncher.launch(intent.toString())
-                }
-            }
-        }
-
-        /*binding.save.setOnClickListener {
-            *//*val content = binding.content.text.toString()
-
-            if (content.isBlank()) {
-                Toast.makeText(this, R.string.error_empty_content, Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            viewModel.changeContentAndSave(content)
-
-            binding.content.setText("") //чтобы поле для ввода текста отличаалось после добаления поста
-            binding.content.clearFocus() // убирает мигающий курсор
-            binding.editGroup.visibility = View.GONE
-            AndroidUtils.hideKeyboard(binding.content) // убирает клавиатуру после добавления поста*//*
-
-
+        binding.save.setOnClickListener {
             newPostLauncher.launch()
         }
 
-        binding.menu_edit.setOnClickListener{
-            val intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                type = "text/plain"
-                putExtra(Intent.EXTRA_TEXT, post.content)
+        viewModel.edited.observe(this) {
+
+            if (it.id != 0L) {
+                editPostLauncher.launch(it.content)
             }
-            editPostLauncher.launch(intent)
-        }*/
 
 
+            /*binding.save.setOnClickListener {
+    *//*val content = binding.content.text.toString()
+
+    if (content.isBlank()) {
+        Toast.makeText(this, R.string.error_empty_content, Toast.LENGTH_SHORT).show()
+        return@setOnClickListener
+    }
+    viewModel.changeContentAndSave(content)
+
+    binding.content.setText("") //чтобы поле для ввода текста отличаалось после добаления поста
+    binding.content.clearFocus() // убирает мигающий курсор
+    binding.editGroup.visibility = View.GONE
+    AndroidUtils.hideKeyboard(binding.content) // убирает клавиатуру после добавления поста*/
+
+            /*
+
+
+    newPostLauncher.launch()
+}
+
+binding.menu_edit.setOnClickListener{
+    val intent = Intent().apply {
+        action = Intent.ACTION_SEND
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, post.content)
+    }
+    editPostLauncher.launch(intent)
+}*/
 
 
 //TODO
@@ -145,6 +139,7 @@ class MainActivity : AppCompatActivity() {
 //            viewModel.editCancel()
 //            AndroidUtils.hideKeyboard(binding.content)
 //        }
+        }
     }
-}
 
+}
