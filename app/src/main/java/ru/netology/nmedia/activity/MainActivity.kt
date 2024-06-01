@@ -140,6 +140,10 @@ binding.menu_edit.setOnClickListener{
 //            AndroidUtils.hideKeyboard(binding.content)
 //        }
         }
+        
+        binding.play.setOnClickListener {
+     
+        }
     }
 
 }
