@@ -33,8 +33,8 @@ class EditPostActivity : AppCompatActivity() {
 
 // контракт на редактирование
 object EditPostContract : ActivityResultContract<String, String?> () {
-    //TODO добавить сам текст поста во входящий параметр content.text.toString()
-    override fun createIntent(context: Context, input: String) = Intent(context, EditPostActivity::class.java).putExtra(Intent.EXTRA_TEXT, input) //?!?!?!
+    // добавить сам текст поста во входящий параметр content.text.toString()
+    override fun createIntent(context: Context, input: String) = Intent(context, EditPostActivity::class.java).putExtra(Intent.EXTRA_TEXT, input)
     override fun parseResult(resultCode: Int, intent: Intent?) = intent?.getStringExtra(Intent.EXTRA_TEXT)
 
 }

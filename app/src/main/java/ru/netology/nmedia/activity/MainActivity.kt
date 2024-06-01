@@ -141,9 +141,9 @@ binding.menu_edit.setOnClickListener{
 //        }
         }
         
-        binding.play.setOnClickListener {
+        /*binding.play.setOnClickListener {
      
-        }
+        }*/
     }
 
 }

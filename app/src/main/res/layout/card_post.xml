@@ -77,14 +77,14 @@
         app:layout_constraintTop_toBottomOf="@+id/main_barrier"
         tools:layout_editor_absoluteX="20dp" />
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/videoImg"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:src="@drawable/video"
         android:contentDescription="@string/videoImg"
         app:layout_constraintTop_toBottomOf="@id/content"
-        />
+        />-->
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/second_barrier"
@@ -92,7 +92,8 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="20dp"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="videoImg" />
+        app:constraint_referenced_ids="content" />
+   <!-- app:constraint_referenced_ids="videoImg"-->
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/likes"
@@ -143,7 +144,7 @@
          shares, viewing"
         tools:visibility="visible" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+   <!-- <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -152,7 +153,7 @@
         app:srcCompat="@drawable/play_button"
         tools:layout_editor_absoluteX="156dp"
         tools:layout_editor_absoluteY="269dp"
-        tools:ignore="NotSibling" />
+        tools:ignore="NotSibling" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
