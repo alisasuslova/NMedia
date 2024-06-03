@@ -117,6 +117,12 @@ class PostRepositoryInMemoryImpl : PostRepository {
             return
 
     }
+    override fun playVideo(id: Long) {
+        posts = posts.map {
+            if (it.id != id) it else it.copy(view = it.view + 1)
+        }
+        data.value = posts
+    }
 }
 
 

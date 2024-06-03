@@ -167,7 +167,7 @@
         app:constraint_referenced_ids="videoImg,playButton"
         app:layout_constraintTop_toBottomOf="@id/content"
         app:layout_constraintBottom_toTopOf="@id/second_barrier"
-
+        android:visibility="invisible"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

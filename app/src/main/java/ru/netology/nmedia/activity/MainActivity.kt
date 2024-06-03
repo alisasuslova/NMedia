@@ -67,6 +67,21 @@ class MainActivity : AppCompatActivity() {
             override fun onRemove(post: Post) {
                 viewModel.removeById(post.id)
             }
+
+            override fun playVideo(post: Post) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.video))
+                if (intent.resolveActivity(packageManager) != null) {
+                    startActivity(intent)
+                }
+                viewModel.playVideo(post.id)
+                viewModel.editCancel()
+            }
+
+            override fun openPost(post: Post) {
+                viewModel.playVideo(post.id)
+                viewModel.editCancel()
+            }
+
         }
         )
 
@@ -80,6 +95,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+
 
         /*fun playVidoe(post: Post)    {
             viewModel.playVideo(post.video) {
