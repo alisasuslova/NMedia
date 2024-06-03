@@ -1,6 +1,7 @@
 package ru.netology.nmedia.activity
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -80,6 +81,25 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        /*fun playVidoe(post: Post)    {
+            viewModel.playVideo(post.video) {
+                if (if (post.video != null) {
+                        val intent = Intent().apply {
+                            action = Intent.ACTION_SEND
+                            type = "text/plain"
+                            putExtra(
+                                Intent.ACTION_VIEW, Uri.parse('https://www.youtube.com/watch?v=WhWc3b3KhnY'))
+
+                        }
+                    }
+
+                else {
+                    finish()
+                }
+
+            }
+        }*/
+
 
 //        viewModel.edited.observe(this) {
 //            if (it.id != 0L) {
@@ -115,22 +135,6 @@ class MainActivity : AppCompatActivity() {
     binding.editGroup.visibility = View.GONE
     AndroidUtils.hideKeyboard(binding.content) // убирает клавиатуру после добавления поста*/
 
-            /*
-
-
-    newPostLauncher.launch()
-}
-
-binding.menu_edit.setOnClickListener{
-    val intent = Intent().apply {
-        action = Intent.ACTION_SEND
-        type = "text/plain"
-        putExtra(Intent.EXTRA_TEXT, post.content)
-    }
-    editPostLauncher.launch(intent)
-}*/
-
-
 
 //        binding.cansel.setOnClickListener {
 //            binding.content.setText("")
@@ -141,9 +145,7 @@ binding.menu_edit.setOnClickListener{
 //        }
         }
         
-        /*binding.play.setOnClickListener {
-     
-        }*/
+
     }
 
 }
