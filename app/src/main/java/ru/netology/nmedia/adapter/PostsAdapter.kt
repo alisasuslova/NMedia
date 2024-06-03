@@ -1,5 +1,7 @@
 package ru.netology.nmedia.adapter
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,7 +53,8 @@ class PostViewHolder(
             content.text = post.content
             likes.text = post.likes.toString()
             shares.text = post.shares.toString()
-
+            /*view.text = post.view.toString()
+            video.text = post.video.toString()*/
 
 
 
@@ -90,6 +93,14 @@ class PostViewHolder(
         } else {
             videoGroup.visibility = View.GONE
         }
+
+            playButton.setOnClickListener() {
+                onInteractionListener.playVideo(post)
+            }
+
+            videoImg.setOnClickListener() {
+                onInteractionListener.playVideo(post)
+            }
 
         }
     }

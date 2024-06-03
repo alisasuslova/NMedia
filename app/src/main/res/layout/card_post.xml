@@ -132,7 +132,7 @@
         app:icon="@drawable/viewing_20"
         android:contentDescription="@string/description_post_viewing"
         tools:checked="@sample/posts.json/data/likedByMe"
-        tools:text="@sample/posts.json/data/viewing"
+        tools:text="@sample/posts.json/data/view"
         style="@style/Widget.AppTheme.LikeCheckBox"/>
 
     <androidx.constraintlayout.widget.Barrier
