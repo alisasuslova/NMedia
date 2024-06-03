@@ -80,75 +80,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-//        viewModel.edited.observe(this) {
-//            if (it.id != 0L) {
-//                binding.content.setText(it.content)
-//                binding.editText2.setText(it.content)
-//                binding.content.focusAndShowKeyboard()
-//                binding.editGroup.visibility = View.VISIBLE
-//            }
-//        }
-
         binding.save.setOnClickListener {
             newPostLauncher.launch()
         }
 
         viewModel.edited.observe(this) {
-            // val postText = it.content
             if (it.id != 0L) {
                 editPostLauncher.launch(it.content)
-
-                /*binding.save.setOnClickListener{
-                    val intent = Intent().apply {
-                        action = Intent.ACTION_SEND
-                        type = "text/plain"
-                        putExtra(Intent.EXTRA_TEXT, postText.toString())
-                    }
-                    editPostLauncher.launch(intent.toString())
-                }*/
-
             }
-
-
-            /*binding.save.setOnClickListener {
-            *//*val content = binding.content.text.toString()
-
-    if (content.isBlank()) {
-        Toast.makeText(this, R.string.error_empty_content, Toast.LENGTH_SHORT).show()
-        return@setOnClickListener
-    }
-    viewModel.changeContentAndSave(content)
-
-    binding.content.setText("") //чтобы поле для ввода текста отличаалось после добаления поста
-    binding.content.clearFocus() // убирает мигающий курсор
-    binding.editGroup.visibility = View.GONE
-    AndroidUtils.hideKeyboard(binding.content) // убирает клавиатуру после добавления поста*/
-
-            /*
-
-
-            newPostLauncher.launch()
-        }
-
-        binding.menu_edit.setOnClickListener{
-            val intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                type = "text/plain"
-                putExtra(Intent.EXTRA_TEXT, post.content)
-            }
-            editPostLauncher.launch(intent)
-        }*/
-
-
-
-//        binding.cansel.setOnClickListener {
-//            binding.content.setText("")
-//            binding.content.clearFocus()
-//            binding.editGroup.visibility = View.GONE
-//            viewModel.editCancel()
-//            AndroidUtils.hideKeyboard(binding.content)
-//        }
         }
     }
 }

@@ -32,8 +32,6 @@ class PostsAdapter(
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
-
-
 }
 
 class PostViewHolder(
@@ -41,7 +39,7 @@ class PostViewHolder(
     private val onInteractionListener: OnInteractionListener,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(post: Post) {
+    fun bind(post: Post) {
         binding.apply {
             author.text = post.author
             published.text = post.published
@@ -49,9 +47,7 @@ class PostViewHolder(
             likes.text = post.likes.toString()
             shares.text = post.shares.toString()
             likes.isChecked = post.likedByMe
-            /*likes.setImageResource(
-                if (post.likedByMe) R.drawable.heart_like_red_20 else R.drawable.heart_like_20
-            )*/
+
             likes.setOnClickListener {
                 onInteractionListener.onLike(post)
             }
@@ -61,8 +57,8 @@ class PostViewHolder(
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
                     inflate(R.menu.options_post)
-                    setOnMenuItemClickListener {item ->
-                        when(item.itemId) {
+                    setOnMenuItemClickListener { item ->
+                        when (item.itemId) {
                             R.id.edit -> {
                                 onInteractionListener.onEdit(post)
                                 true
