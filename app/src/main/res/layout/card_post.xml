@@ -132,7 +132,7 @@
         app:icon="@drawable/viewing_20"
         android:contentDescription="@string/description_post_viewing"
         tools:checked="@sample/posts.json/data/likedByMe"
-        tools:text="@sample/posts.json/data/viewing"
+        tools:text="@sample/posts.json/data/view"
         style="@style/Widget.AppTheme.LikeCheckBox"/>
 
     <androidx.constraintlayout.widget.Barrier
@@ -146,7 +146,7 @@
         tools:visibility="visible" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/play"
+        android:id="@+id/playButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/videoImg"
@@ -159,5 +159,15 @@
         app:backgroundTint="@android:color/transparent"
         tools:ignore="NotSibling" />
 
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/videoGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="videoImg,playButton"
+        app:layout_constraintTop_toBottomOf="@id/content"
+        app:layout_constraintBottom_toTopOf="@id/second_barrier"
+        android:visibility="invisible"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

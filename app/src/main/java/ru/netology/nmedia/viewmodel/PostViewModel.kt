@@ -39,5 +39,6 @@ class PostViewModel : ViewModel() {
     fun editCancel() {
         edited.value = empty
     }
+    fun playVideo(id: Long) = repository.playVideo(id)
 }
 
