@@ -16,6 +16,8 @@ class EditPostActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityEditPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.content.setText(intent?.getStringExtra(Intent.EXTRA_TEXT)) //!!! Показывает текст перед редактированием
         binding.save.setOnClickListener {
             val text = binding.content.text.toString()
             if(text.isBlank()) {
