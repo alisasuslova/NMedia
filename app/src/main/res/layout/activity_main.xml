@@ -66,12 +66,13 @@
         android:visibility="gone"
         app:constraint_referenced_ids="editText1, editText2, edit, cansel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/barrier"
+        app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="NotSibling">
 
 
-        <TextView
+
+    <TextView
             android:id="@+id/editText1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
