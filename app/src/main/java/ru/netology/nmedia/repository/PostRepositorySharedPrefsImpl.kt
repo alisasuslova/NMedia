@@ -93,7 +93,9 @@ class PostRepositorySharedPrefsImpl(
     init {
         prefs.getString(KEY, null)?.let {
             posts = gson.fromJson(it, typeToken) // если не null, передаем строку и условие как ее представить в виде постов(typeToken)
-            nextId = posts.maxOf { it.id } + 1 // обновляем id нового поста, чтобы лайки не дублировались на два сразу
+
+                // nextId = posts.maxOf { it.id } + 1 // обновляем id нового поста, чтобы лайки не дублировались на два сразу
+            nextId = posts.maxOfOrNull { it.id }!!
         } ?: run {
             posts = defaultPosts // если строка пустая, заполняем файл списком постов по умолчанию
             sync() // метод синхронизации

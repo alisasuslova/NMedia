@@ -20,7 +20,7 @@ class PostRepositoryFileImpl(
     private var typeToken = TypeToken.getParameterized(List::class.java, Post::class.java).type
     private var nextId = 1L
     private var posts = emptyList<Post>()
-        private set (value) {
+        private set (value) {  //!!!
             field = value
             sync()
         }
@@ -98,7 +98,7 @@ class PostRepositoryFileImpl(
         if (file.exists()) { // проверяем существует ли файл по этому пути
             context.openFileInput(FILENAME).bufferedReader().use {// если существует, то можем его открыть по абсолютному пути
                 posts = gson.fromJson(it, typeToken)
-                nextId = posts.maxOf { it.id } + 1
+                nextId = posts.maxOfOrNull { it.id }!!
             }
         } else {
             posts = defaultPosts // если файла нет, от создаем его, записываем посты по умолчанию
@@ -107,7 +107,7 @@ class PostRepositoryFileImpl(
     }
     private fun sync() { // обращаемся к prefs  и редактируем. with - последовательное выполнение действий на объекте
         context.openFileOutput(FILENAME, Context.MODE_PRIVATE).bufferedWriter().use {
-            it.write(gson.toJson(posts)) // вызываем сетод write и передаем посты в формате .json
+            it.write(gson.toJson(posts)) // вызываем метод write и передаем посты в формате .json
         }
     }
 
