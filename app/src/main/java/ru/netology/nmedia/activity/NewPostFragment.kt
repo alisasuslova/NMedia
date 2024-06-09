@@ -11,11 +11,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 //import ru.netology.nmedia.databinding.ActivityNewPostBinding
 import ru.netology.nmedia.databinding.FragmentFeedBinding
+import ru.netology.nmedia.viewmodel.PostViewModel
+import kotlin.properties.ReadWriteProperty
+import kotlin.reflect.KProperty
 
 class NewPostFragment : Fragment() {
+
+    companion object {
+        var Bundle.textArg: String? by StringArg
+
+    }
+
+    private val viewModel: PostViewModel by viewModels(
+        ownerProducer = ::requireParentFragment
+    )
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,11 +42,11 @@ class NewPostFragment : Fragment() {
         binding.edit.requestFocus()
         binding.save.setOnClickListener {
             val intent = Intent()
-            if (TextUtils.isEmpty(binding.content)) {
+            if (TextUtils.isEmpty(binding.context)) {  // ?!?!?!?
                 activity?.setResult(Activity.RESULT_CANCELED, intent)
             } else {
 
-            val content = binding.edit.context.toString()
+                val content = binding.edit.context.toString()
                 intent.putExtra(Intent.EXTRA_TEXT, content)
                 activity?.setResult(Activity.RESULT_OK, intent)
             }
@@ -41,7 +54,7 @@ class NewPostFragment : Fragment() {
         }
 
         return binding.root
-}
+    }
     /*
         binding.save.setOnClickListener {
             val text = binding.content.text.toString()
@@ -58,11 +71,28 @@ class NewPostFragment : Fragment() {
 
 // контракт
 
-object NewPostContract : ActivityResultContract<Unit, String?> () {
-    override fun createIntent(context: Context, input: Unit) =
-        Intent(context, NewPostFragment::class.java)
+   /* object NewPostContract : ActivityResultContract<Unit, String?>() {
+        override fun createIntent(context: Context, input: Unit) =
+            Intent(context, NewPostFragment::class.java)
 
-    override fun parseResult(resultCode: Int, intent: Intent?) =
-        intent?.getStringExtra(Intent.EXTRA_TEXT)
+        override fun parseResult(resultCode: Int, intent: Intent?) =
+            intent?.getStringExtra(Intent.EXTRA_TEXT)
+
+    }*/
+}
+
+object StringArg : ReadWriteProperty<Bundle, String?> {
+
+    override fun getValue(thisRef: Bundle, property: KProperty<*>, value : String?) {
+        thisRef.putString(property.name, value)
+    }
+
+    override fun setValue(thisRef: Bundle, property: KProperty<*>, value: String?) {
+        thisRef.getString(property.name)
+    }
+
+    override fun getValue(thisRef: Bundle, property: KProperty<*>): String? {
+        TODO("Not yet implemented")
+    }
 
 }

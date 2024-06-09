@@ -13,7 +13,9 @@ import androidx.appcompat.app.AppCompatViewInflater
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainer
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
+import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
 
@@ -38,10 +40,10 @@ class FeedFragment : Fragment() {
         )
 
         //регистрация контракта на создание нового поста
-        val newPostLauncher = registerForActivityResult(NewPostContract) {
+        /*val newPostLauncher = registerForActivityResult(NewPostContract) {
             val result = it ?: return@registerForActivityResult
             viewModel.changeContentAndSave(result)
-        }
+        }*/
 
         //регистрация контракта на редактирование
         val editPostLauncher = registerForActivityResult(EditPostContract) {
@@ -80,7 +82,10 @@ class FeedFragment : Fragment() {
             }
 
             override fun playVideo(post: Post) {
-                TODO("Not yet implemented")
+                findNavController().navigate(
+                    R.id.action_feedFragment_to_newPostFragment,
+                    Bundle().apply { textArg = post.id.toString() }
+                )
             }
 
             /*override fun playVideo(post: Post) {
@@ -111,9 +116,9 @@ class FeedFragment : Fragment() {
                 }
 
 
-                binding.save.setOnClickListener {
+         /*       binding.save.setOnClickListener {
             newPostLauncher.launch()
-        }
+        }*/
 
                 viewModel.edited.observe(viewLifecycleOwner) {
 
@@ -122,6 +127,9 @@ class FeedFragment : Fragment() {
             }
         }
 
+        binding.save.setOnClickListener{
+            findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
+        }
 
         return binding.root
     }
