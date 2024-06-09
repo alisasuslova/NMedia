@@ -98,7 +98,8 @@ class PostRepositoryFileImpl(
         if (file.exists()) { // проверяем существует ли файл по этому пути
             context.openFileInput(FILENAME).bufferedReader().use {// если существует, то можем его открыть по абсолютному пути
                 posts = gson.fromJson(it, typeToken)
-                nextId = posts.maxOfOrNull { it.id }!!
+                    //nextId = posts.maxOf { it.id } + 1
+                nextId = posts.maxOfOrNull { it.id + 1 }  ?: 1
             }
         } else {
             posts = defaultPosts // если файла нет, от создаем его, записываем посты по умолчанию
