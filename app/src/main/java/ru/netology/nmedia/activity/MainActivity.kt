@@ -86,6 +86,11 @@ class MainActivity : AppCompatActivity() {
         )
 
         binding.list.adapter = adapter
+        val posts = viewModel.data
+            adapter.submitList(posts)
+        }
+
+        /*binding.list.adapter = adapter
         viewModel.data.observe(this) { posts ->
             val newPost =
                 posts.size > adapter.currentList.size  //чтобы не перескакивало вверх при нажатии на реакции
@@ -94,7 +99,7 @@ class MainActivity : AppCompatActivity() {
                     binding.list.smoothScrollToPosition(0)
                 }
             }
-        }
+        }*/
 
 
 
@@ -127,7 +132,7 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        }
 
-        binding.save.setOnClickListener {
+       /* binding.save.setOnClickListener {
             newPostLauncher.launch()
         }
 
@@ -135,7 +140,7 @@ class MainActivity : AppCompatActivity() {
 
             if (it.id != 0L) {
                 editPostLauncher.launch(it.content)
-            }
+            }*/
 
 
             /*binding.save.setOnClickListener {
@@ -162,7 +167,3 @@ class MainActivity : AppCompatActivity() {
 //        }
         }
         
-
-    }
-
-}
