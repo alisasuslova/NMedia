@@ -1,3 +1,4 @@
+/*
 package ru.netology.nmedia.activity
 
 import android.content.Intent
@@ -93,7 +94,8 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        /*binding.list.adapter = adapter
+        */
+/*binding.list.adapter = adapter
         viewModel.data.observe(this) { posts ->
             val newPost =
                 posts.size > adapter.currentList.size  //чтобы не перескакивало вверх при нажатии на реакции
@@ -102,11 +104,13 @@ class MainActivity : AppCompatActivity() {
                     binding.list.smoothScrollToPosition(0)
                 }
             }
-        }*/
+        }*//*
 
 
 
-        /*fun playVidoe(post: Post)    {
+
+        */
+/*fun playVidoe(post: Post)    {
             viewModel.playVideo(post.video) {
                 if (if (post.video != null) {
                         val intent = Intent().apply {
@@ -123,7 +127,8 @@ class MainActivity : AppCompatActivity() {
                 }
 
             }
-        }*/
+        }*//*
+
 
 
 //        viewModel.edited.observe(this) {
@@ -135,7 +140,8 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        }
 
-       /* binding.save.setOnClickListener {
+       */
+/* binding.save.setOnClickListener {
             newPostLauncher.launch()
         }
 
@@ -143,11 +149,15 @@ class MainActivity : AppCompatActivity() {
 
             if (it.id != 0L) {
                 editPostLauncher.launch(it.content)
-            }*/
+            }*//*
 
 
-            /*binding.save.setOnClickListener {
-    *//*val content = binding.content.text.toString()
+
+            */
+/*binding.save.setOnClickListener {
+    *//*
+*/
+/*val content = binding.content.text.toString()
 
     if (content.isBlank()) {
         Toast.makeText(this, R.string.error_empty_content, Toast.LENGTH_SHORT).show()
@@ -158,7 +168,8 @@ class MainActivity : AppCompatActivity() {
     binding.content.setText("") //чтобы поле для ввода текста отличаалось после добаления поста
     binding.content.clearFocus() // убирает мигающий курсор
     binding.editGroup.visibility = View.GONE
-    AndroidUtils.hideKeyboard(binding.content) // убирает клавиатуру после добавления поста*/
+    AndroidUtils.hideKeyboard(binding.content) // убирает клавиатуру после добавления поста*//*
+
 
 
 //        binding.cansel.setOnClickListener {
@@ -170,3 +181,4 @@ class MainActivity : AppCompatActivity() {
 //        }
         }
         
+*/
