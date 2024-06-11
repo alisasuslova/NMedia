@@ -86,8 +86,11 @@ class MainActivity : AppCompatActivity() {
         )
 
         binding.list.adapter = adapter
-        val posts = viewModel.data
-            adapter.submitList(posts)
+        viewModel.data.observe(viewLifecycleOwner){ model ->
+            adapter.submitList(model.posts)
+
+        }
+
         }
 
         /*binding.list.adapter = adapter

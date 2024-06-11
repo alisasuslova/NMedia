@@ -23,5 +23,9 @@
     <string name="chooser_share_post">Share post</string>
     <string name="post_text">Post text</string>
     <string name="videoImg">Video</string>
+    <string name="add_post">Add Post</string>
+    <string name="network_error">Network error</string>
+    <string name="retry">Retry</string>
+
 
 </resources>

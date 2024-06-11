@@ -2,10 +2,13 @@ package ru.netology.nmedia.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.model.FeedModel
 import ru.netology.nmedia.repository.PostRepository
 import ru.netology.nmedia.repository.PostRepositoryImpl
+import kotlin.concurrent.thread
 
 private val empty = Post(
     id = 0,
@@ -17,8 +20,32 @@ private val empty = Post(
 class PostViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: PostRepository = PostRepositoryImpl()
-    val data = repository.getAll()
+
+    private val _data = MutableLiveData<FeedModel>() //меняем только внутри класса
+    val data : LiveData<FeedModel> // публичное сво-во
+        get() = _data
+
     val edited = MutableLiveData(empty)
+
+    init {
+        load()
+    }
+
+    private fun load() {
+        // создаем фоновый поток
+        thread {
+            _data.postValue(FeedModel(loading = true)) // в момент создания состояние загрузки включено
+
+            _data.postValue(
+            try {
+                val posts = repository.getAll()
+                FeedModel(posts = posts, empty = posts.isEmpty()) // скачиваем посты, все успешно
+            } catch (e: Exception) {
+               (FeedModel(error = true)) // если ошибка
+            }
+            )
+        }
+    }
 
     fun changeContentAndSave(text: String) {
         edited.value?.let {
