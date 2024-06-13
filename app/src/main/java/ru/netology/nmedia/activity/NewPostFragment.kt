@@ -25,6 +25,10 @@ class NewPostFragment : Fragment() {
     companion object {
         var Bundle.textArg: String? by StringArg
 
+        /*private const val TEXT_KEY = "TEXT_KEY"
+        var Bundle.textArg: String?
+            set(value) = putString(TEXT_KEY, value)
+            get() = getString(TEXT_KEY)*/
     }
 
     private val viewModel: PostViewModel by viewModels(
@@ -40,15 +44,23 @@ class NewPostFragment : Fragment() {
             container,
             false
         )
-        binding.edit.requestFocus()
+
+        arguments?.textArg
+            ?.let(binding.edit::setText)  //слайд 35
+
+        //arguments?.textArg?.let(binding.edit.setText(it))
 
         binding.save.setOnClickListener {
-            viewModel.changeContentAndSave(binding.edit.context.toString())
-            AndroidUtils.hideKeyboard(requireView())
-            findNavController().navigateUp()
-        }
+                   viewModel.changeContentAndSave(binding.edit.context.toString()) // запись текста поста уже в самом фрагменте
+                   AndroidUtils.hideKeyboard(requireView())
+                   findNavController().navigateUp() //вызов прошлого состояния, аналогично нажатию на кнопку назад
+               }
 
-        /*binding.save.setOnClickListener {
+        return binding.root
+
+
+        /*binding.edit.requestFocus()
+        binding.save.setOnClickListener {
             val intent = Intent()
             if (TextUtils.isEmpty(binding.edit.context.toString())) {  // ?!?!?!?
                 activity?.setResult(Activity.RESULT_CANCELED, intent)
@@ -61,7 +73,6 @@ class NewPostFragment : Fragment() {
             findNavController()
         }*/
 
-        return binding.root
     }
 
 }

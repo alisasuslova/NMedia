@@ -24,16 +24,11 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
             }
             intent.removeExtra(Intent.EXTRA_TEXT)
 
+            //переход на фрагмент создания нового поста - здесь!!! Передача аргументов фрагменту:
             findNavController(R.id.nav_host_fragment).navigate(
-                R.id.action_feedFragment_to_newPostFragment,
+                R.id.action_feedFragment_to_newPostFragment,  // сам переход
                 Bundle().apply {
-                    textArg = text
-                }
-            )
-            findNavController(R.id.nav_host_fragment).navigate(
-                R.id.action_feedFragment_to_newPostFragment,
-                Bundle().apply {
-                    textArg = text
+                    textArg = text  // текст который передаем в новый фрагмент
                 }
             )
         }

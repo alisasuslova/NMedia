@@ -18,7 +18,6 @@ import ru.netology.nmedia.R
 import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
-
 import ru.netology.nmedia.databinding.FragmentFeedBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewmodel.PostViewModel
@@ -46,10 +45,10 @@ class FeedFragment : Fragment() {
         }*/
 
         //регистрация контракта на редактирование
-        val editPostLauncher = registerForActivityResult(EditPostContract) {
+        /*val editPostLauncher = registerForActivityResult(EditPostContract) {
             val result = it ?: return@registerForActivityResult
             viewModel.changeContentAndSave(result)
-        }
+        }*/
 
 
         val adapter = PostsAdapter(object : OnInteractionListener {
@@ -120,11 +119,12 @@ class FeedFragment : Fragment() {
             newPostLauncher.launch()
         }*/
 
-                viewModel.edited.observe(viewLifecycleOwner) {
+                viewModel.data.observe(viewLifecycleOwner) { posts->
+                    adapter.submitList(posts)
 
-            if (it.id != 0L) {
+            /*if (it.id != 0L) {
                 editPostLauncher.launch(it.content)
-            }
+            }*/
         }
 
         binding.save.setOnClickListener{
