@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.NewPostActivity">
+    tools:context=".activity.NewPostFragment">
 
     <EditText
         android:id="@+id/content"
@@ -26,12 +26,13 @@
         style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
         />
 
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/save"
+        android:id="@+id/ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/description_post_save"
-        app:srcCompat="@drawable/ic_ok_24dp"
+        app:srcCompat="@drawable/ic_save_48"
         app:layout_anchor="@id/bottomAppBar"
         />
 

@@ -1,26 +1,25 @@
 package ru.netology.nmedia.activity
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.launch
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainer
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
-//import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.databinding.FragmentFeedBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewmodel.PostViewModel
 
 class FeedFragment : Fragment() {
+
+    private val viewModel: PostViewModel by viewModels(
+        ownerProducer = ::requireParentFragment
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,21 +31,6 @@ class FeedFragment : Fragment() {
             container,
             false
         )
-
-        val viewModel: PostViewModel by viewModels()
-
-        //регистрация контракта на создание нового поста
-        val newPostLauncher = registerForActivityResult(NewPostContract) {
-            val result = it ?: return@registerForActivityResult
-            viewModel.changeContentAndSave(result)
-        }
-
-        //регистрация контракта на редактирование
-        val editPostLauncher = registerForActivityResult(EditPostContract) {
-            val result = it ?: return@registerForActivityResult
-            viewModel.changeContentAndSave(result)
-        }
-
 
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onLike(post: Post) {
@@ -107,18 +91,17 @@ class FeedFragment : Fragment() {
             }
         }
 
-
-        binding.save.setOnClickListener {
-            newPostLauncher.launch()
+        //переход на фрагмент новый пост
+        binding.fab.setOnClickListener {
+            findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
         }
 
+        /*//мб еще одни переход
         viewModel.edited.observe(viewLifecycleOwner) {
-
             if (it.id != 0L) {
                 editPostLauncher.launch(it.content)
             }
-
-        }
+        }*/
         return binding.root
     }
 }
