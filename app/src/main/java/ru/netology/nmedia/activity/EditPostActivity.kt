@@ -1,15 +1,11 @@
 package ru.netology.nmedia.activity
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContract
-import ru.netology.nmedia.R
+import androidx.appcompat.app.AppCompatActivity
 import ru.netology.nmedia.databinding.ActivityEditPostBinding
-import ru.netology.nmedia.databinding.ActivityIntentHandlerBinding
-import ru.netology.nmedia.databinding.ActivityNewPostBinding
 
 class EditPostActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
