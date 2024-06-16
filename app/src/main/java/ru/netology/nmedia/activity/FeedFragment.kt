@@ -3,25 +3,35 @@ package ru.netology.nmedia.activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
+import android.view.ViewGroup
 import androidx.activity.result.launch
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainer
+import androidx.fragment.app.viewModels
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
+import ru.netology.nmedia.databinding.FragmentFeedBinding
 import ru.netology.nmedia.dto.Post
-import ru.netology.nmedia.util.AndroidUtils
-import ru.netology.nmedia.util.focusAndShowKeyboard
 import ru.netology.nmedia.viewmodel.PostViewModel
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+class FeedFragment : Fragment() {
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val binding = FragmentFeedBinding.inflate(
+            inflater,
+            container,
+            false
+        )
 
         val viewModel: PostViewModel by viewModels()
 
@@ -69,12 +79,13 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun playVideo(post: Post) {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.video))
+                //todo
+                /*val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.video))
                 if (intent.resolveActivity(packageManager) != null) {
                     startActivity(intent)
                 }
                 viewModel.playVideo(post.id)
-                viewModel.editCancel()
+                viewModel.editCancel()*/
             }
 
             override fun openPost(post: Post) {
@@ -86,7 +97,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         binding.list.adapter = adapter
-        viewModel.data.observe(this) { posts ->
+        viewModel.data.observe(viewLifecycleOwner) { posts ->
             val newPost =
                 posts.size > adapter.currentList.size  //чтобы не перескакивало вверх при нажатии на реакции
             adapter.submitList(posts) {
@@ -97,72 +108,17 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-
-        /*fun playVidoe(post: Post)    {
-            viewModel.playVideo(post.video) {
-                if (if (post.video != null) {
-                        val intent = Intent().apply {
-                            action = Intent.ACTION_SEND
-                            type = "text/plain"
-                            putExtra(
-                                Intent.ACTION_VIEW, Uri.parse('https://www.youtube.com/watch?v=WhWc3b3KhnY'))
-
-                        }
-                    }
-
-                else {
-                    finish()
-                }
-
-            }
-        }*/
-
-
-//        viewModel.edited.observe(this) {
-//            if (it.id != 0L) {
-//                binding.content.setText(it.content)
-//                binding.editText2.setText(it.content)
-//                binding.content.focusAndShowKeyboard()
-//                binding.editGroup.visibility = View.VISIBLE
-//            }
-//        }
-
         binding.save.setOnClickListener {
             newPostLauncher.launch()
         }
 
-        viewModel.edited.observe(this) {
+        viewModel.edited.observe(viewLifecycleOwner) {
 
             if (it.id != 0L) {
                 editPostLauncher.launch(it.content)
             }
 
-
-            /*binding.save.setOnClickListener {
-    *//*val content = binding.content.text.toString()
-
-    if (content.isBlank()) {
-        Toast.makeText(this, R.string.error_empty_content, Toast.LENGTH_SHORT).show()
-        return@setOnClickListener
-    }
-    viewModel.changeContentAndSave(content)
-
-    binding.content.setText("") //чтобы поле для ввода текста отличаалось после добаления поста
-    binding.content.clearFocus() // убирает мигающий курсор
-    binding.editGroup.visibility = View.GONE
-    AndroidUtils.hideKeyboard(binding.content) // убирает клавиатуру после добавления поста*/
-
-
-//        binding.cansel.setOnClickListener {
-//            binding.content.setText("")
-//            binding.content.clearFocus()
-//            binding.editGroup.visibility = View.GONE
-//            viewModel.editCancel()
-//            AndroidUtils.hideKeyboard(binding.content)
-//        }
         }
-        
-
+        return binding.root
     }
-
 }
