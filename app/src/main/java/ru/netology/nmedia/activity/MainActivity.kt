@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
@@ -83,8 +84,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.list.adapter = adapter
         viewModel.data.observe(this) { model ->
+            binding.editGroup.isVisible = model.error
+            binding.emptyState.isVisible = model.empty
+            binding.progress.isVisible = model.loading
             adapter.submitList(model.posts)
-
         }
 
     }
