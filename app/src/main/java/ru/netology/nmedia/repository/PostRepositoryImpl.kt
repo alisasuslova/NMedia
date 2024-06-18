@@ -10,6 +10,7 @@ import okhttp3.Request
 import ru.netology.nmedia.dto.Post
 import java.util.concurrent.TimeUnit
 
+// 54:53
 class PostRepositoryImpl : PostRepository {
 
     private val client = OkHttpClient.Builder()
