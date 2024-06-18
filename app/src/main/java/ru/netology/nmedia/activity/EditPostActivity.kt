@@ -1,3 +1,4 @@
+/*
 package ru.netology.nmedia.activity
 
 import android.app.Activity
@@ -39,4 +40,4 @@ object EditPostContract : ActivityResultContract<String, String?> () {
     override fun createIntent(context: Context, input: String) = Intent(context, EditPostActivity::class.java).putExtra(Intent.EXTRA_TEXT, input)
     override fun parseResult(resultCode: Int, intent: Intent?) = intent?.getStringExtra(Intent.EXTRA_TEXT)
 
-}
+}*/
