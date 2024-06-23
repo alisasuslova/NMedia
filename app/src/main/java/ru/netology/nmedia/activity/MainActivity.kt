@@ -90,5 +90,9 @@ class MainActivity : AppCompatActivity() {
             adapter.submitList(model.posts)
         }
 
+        binding.retry.setOnClickListener {
+            viewModel.load()
+        }
+
     }
 }

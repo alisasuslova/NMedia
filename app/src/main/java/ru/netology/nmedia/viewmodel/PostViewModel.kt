@@ -31,7 +31,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         load()
     }
 
-    private fun load() {
+     fun load() {
         // создаем фоновый поток
         thread {
             _data.postValue(FeedModel(loading = true)) // в момент создания состояние загрузки включено
