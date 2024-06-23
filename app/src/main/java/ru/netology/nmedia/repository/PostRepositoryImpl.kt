@@ -1,7 +1,5 @@
 package ru.netology.nmedia.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.MediaType.Companion.toMediaType
@@ -21,7 +19,7 @@ class PostRepositoryImpl : PostRepository {
     private val type = object : TypeToken<List<Post>>() {}.type
 
     companion object {
-        private const val BASE_URL = "http://10.0.2.2:9999/"
+        private const val BASE_URL = "http://10.0.2.2:9998/"
         private val jsonType = "application/json".toMediaType()
     }
 
