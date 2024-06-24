@@ -33,7 +33,6 @@ class PostsAdapter(
         holder.bind(getItem(position))
     }
 
-
 }
 
 class PostViewHolder(
@@ -48,15 +47,12 @@ class PostViewHolder(
             content.text = post.content
             likes.text = post.likes.toString()
             shares.text = post.shares.toString()
-            /*view.text = post.view.toString()
-            video.text = post.video.toString()*/
+
 
 
 
             likes.isChecked = post.likedByMe
-            /*likes.setImageResource(
-                if (post.likedByMe) R.drawable.heart_like_red_20 else R.drawable.heart_like_20
-            )*/
+
             likes.setOnClickListener {
                 onInteractionListener.onLike(post)
             }
@@ -81,6 +77,10 @@ class PostViewHolder(
                         }
                     }
                 }.show()
+            }
+
+            content.setOnClickListener {
+                onInteractionListener.openPost(post)
             }
 
         if(post.video != null) {

@@ -1,6 +1,7 @@
 package ru.netology.nmedia.activity
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
+import ru.netology.nmedia.activity.PostOneFragment.Companion.textArg
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.FragmentFeedBinding
@@ -60,18 +62,20 @@ class FeedFragment : Fragment() {
             }
 
             override fun playVideo(post: Post) {
-                //todo
-               /* val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.video))
-                if (intent.resolveActivity(packageManager) != null) {
-                    startActivity(intent)
-                }
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.video))
+                startActivity(intent)
                 viewModel.playVideo(post.id)
-                viewModel.editCancel()*/
+                viewModel.editCancel()
             }
 
             override fun openPost(post: Post) {
-                viewModel.playVideo(post.id)
-                viewModel.editCancel()
+
+                // !!! переход на один пост
+
+                findNavController().navigate(
+                    R.id.action_feedFragment_to_postOneFragment,
+                    Bundle().apply { textArg = post.id.toString() }
+                )
             }
 
         }
@@ -79,30 +83,14 @@ class FeedFragment : Fragment() {
 
         binding.list.adapter = adapter
         viewModel.data.observe(viewLifecycleOwner) { posts ->
-            val newPost =
-                posts.size > adapter.currentList.size  //чтобы не перескакивало вверх при нажатии на реакции
-            adapter.submitList(posts) {
-                if (newPost) {
-                    binding.list.smoothScrollToPosition(0)
-                }
-            }
+            adapter.submitList(posts)
         }
-
 
 
         binding.save.setOnClickListener {
             findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
         }
 
-        viewModel.edited.observe(viewLifecycleOwner) {
-
-            //todo
-            /*if (it.id != 0L) {
-                editPostLauncher.launch(it.content)
-            }*/
-
-
-        }
 
         return binding.root
     }

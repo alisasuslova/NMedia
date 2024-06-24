@@ -37,6 +37,13 @@ class AppActivity : AppCompatActivity() {
                     Bundle().apply {
                         textArg = text
                     })
+
+                //переход на фрагмент одного поста
+                findNavController(R.id.one_post).navigate(
+                    R.id.action_feedFragment_to_postOneFragment,
+                    Bundle().apply {
+                        textArg = text
+                    })
             }
         }
     }
