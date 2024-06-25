@@ -29,8 +29,12 @@ class PostRepositorySQLiteImpl(
     }
 
     override fun shareById(id: Long) {
-        TODO("Not yet implemented")
+        posts = posts.map {
+            if (it.id != id) it else it.copy(shares = it.shares + 1)
+        }
+        data.value = posts
     }
+
 
     override fun removeById(id: Long) {
         dao.removeById(id)
@@ -51,8 +55,10 @@ class PostRepositorySQLiteImpl(
     }
 
     override fun playVideo(id: Long) {
-        TODO("Not yet implemented")
+        posts = posts.map {
+            if (it.id != id) it else it.copy(view = it.view + 1)
+        }
+        data.value = posts
     }
-}
 
-//
+}
