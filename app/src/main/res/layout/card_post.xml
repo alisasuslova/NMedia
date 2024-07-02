@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".activity.MainActivity"
+    tools:context=".activity.FeedFragment"
     android:padding="20dp">
 
     <ImageView
@@ -94,7 +94,7 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="videoImg"
          />
-   <!-- app:constraint_referenced_ids="content"-->
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/likes"
@@ -169,5 +169,7 @@
         app:layout_constraintBottom_toTopOf="@id/second_barrier"
         android:visibility="invisible"
         />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
