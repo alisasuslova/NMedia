@@ -48,12 +48,14 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun changeContentAndSave(text: String) {
-        edited.value?.let {
-            if (it.content != text.trim()){
-                repository.save(it.copy(content = text))
+        thread {
+            edited.value?.let {
+                if (it.content != text.trim()) {
+                    repository.save(it.copy(content = text))
+                }
             }
+            edited.postValue(empty)
         }
-        edited.value = empty
     }
 
     fun likeById(id: Long) = repository.likeById(id)
