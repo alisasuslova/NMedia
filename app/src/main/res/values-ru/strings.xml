@@ -13,4 +13,7 @@
     <string name="chooser_share_post">Варианты как поделиться публикацией</string>
     <string name="post_text">Текст поста</string>
     <string name="videoImg">Видео</string>
+    <string name="network_error">Ошибка сети</string>
+    <string name="no_posts">Нет постов</string>
+    <string name="retry">Повторить</string>
 </resources>

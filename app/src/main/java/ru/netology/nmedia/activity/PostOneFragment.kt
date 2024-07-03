@@ -43,7 +43,7 @@ class PostOneFragment : Fragment() {
 
 
 
-        viewModel.data.observe(viewLifecycleOwner) { postList ->
+        /*viewModel.data.observe(viewLifecycleOwner) { postList ->
             val post = postList.find { it.id == arguments?.textArg?.toLong() } ?: return@observe
             PostViewHolder(binding.onePost, object : OnInteractionListener {
                 override fun onLike(post: Post) {
@@ -90,7 +90,7 @@ class PostOneFragment : Fragment() {
                 }
             }).bind(post)
 
-        }
+        }*/
         return binding.root
     }
 
