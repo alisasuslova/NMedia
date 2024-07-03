@@ -8,6 +8,7 @@ import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.model.FeedModel
 import ru.netology.nmedia.repository.PostRepository
 import ru.netology.nmedia.repository.PostRepositoryImpl
+import ru.netology.nmedia.util.SingleLiveEvent
 import kotlin.concurrent.thread
 
 private val empty = Post(
@@ -25,6 +26,9 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     val data : LiveData<FeedModel> // публичное сво-во
         get() = _data
 
+    private val _postCreated = SingleLiveEvent<Unit>()
+    val postCreated: LiveData<Unit>
+        get() = _postCreated
     val edited = MutableLiveData(empty)
 
     init {
@@ -52,6 +56,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             edited.value?.let {
                 if (it.content != text.trim()) {
                     repository.save(it.copy(content = text))
+                    _postCreated.postValue(Unit)
                 }
             }
             edited.postValue(empty)

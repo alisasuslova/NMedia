@@ -35,7 +35,12 @@ class NewPostFragment : Fragment() {
 
             if(binding.content.text.isNotBlank()) {
                 viewModel.changeContentAndSave(binding.content.text.toString())
+
+            }
+
+            viewModel.postCreated.observe(viewLifecycleOwner) {
                 findNavController().navigateUp()
+                viewModel.load()
             }
 
         }
