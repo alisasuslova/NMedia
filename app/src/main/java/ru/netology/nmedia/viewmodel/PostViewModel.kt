@@ -68,11 +68,11 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     fun likeById(post: Post) {
         thread {
             val likedPost =
-            if(post.likedByMe){
-                repository.unlikeById(post.id)
-            } else {
-                repository.likeById(post.id)
-            }
+                if(post.likedByMe){
+                    repository.unlikeById(post.id)
+                } else {
+                    repository.likeById(post.id)
+                }
             val updatePosts = _data.value?.posts.orEmpty().map {
                 if(it.id == likedPost.id) {
                     likedPost
@@ -95,4 +95,3 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     }
     fun playVideo(id: Long) = repository.playVideo(id)
 }
-
