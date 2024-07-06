@@ -45,7 +45,6 @@ class PostOneFragment : Fragment() {
 
         viewModel.data.observe(viewLifecycleOwner) { model ->
             val post = model.posts.find { it.id == arguments?.textArg?.toLong() } ?: return@observe
-
             PostViewHolder(binding.onePost, object : OnInteractionListener {
                 override fun onLike(post: Post) {
                     viewModel.likeById(post)
