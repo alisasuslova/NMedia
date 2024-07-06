@@ -43,11 +43,12 @@ class PostOneFragment : Fragment() {
 
 
 
-        /*viewModel.data.observe(viewLifecycleOwner) { postList ->
-            val post = postList.find { it.id == arguments?.textArg?.toLong() } ?: return@observe
+        viewModel.data.observe(viewLifecycleOwner) { model ->
+            val post = model.posts.find { it.id == arguments?.textArg?.toLong() } ?: return@observe
+
             PostViewHolder(binding.onePost, object : OnInteractionListener {
                 override fun onLike(post: Post) {
-                    viewModel.likeById(post.id)
+                    viewModel.likeById(post)
                 }
 
                 override fun onShare(post: Post) {
@@ -90,7 +91,7 @@ class PostOneFragment : Fragment() {
                 }
             }).bind(post)
 
-        }*/
+        }
         return binding.root
     }
 
