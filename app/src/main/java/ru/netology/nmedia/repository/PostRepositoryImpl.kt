@@ -73,7 +73,15 @@ class PostRepositoryImpl : PostRepository {
     }
 
     override fun removeById(id: Long) {
-        TODO("Not yet implemented")
+        val request = Request.Builder()
+            .url("${BASE_URL}api/slow/posts/$id")
+            .delete()
+            .build()
+
+        client.newCall(request)
+            .execute()
+            .close()
+
     }
 
     override fun save(post: Post): Post {
