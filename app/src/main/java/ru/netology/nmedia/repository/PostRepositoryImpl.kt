@@ -51,8 +51,8 @@ class PostRepositoryImpl : PostRepository {
         return client.newCall(request)
             .execute()
             .let { it.body?.string() ?: throw RuntimeException("body is null") }
-            .let { gson.fromJson(it, type) }
-            //.let { gson.fromJson(it,Post::class.java) }
+            //.let { gson.fromJson(it, type) }
+            .let { gson.fromJson(it,Post::class.java) }
     }
 
     override fun unlikeById(id: Long): Post {
@@ -64,7 +64,8 @@ class PostRepositoryImpl : PostRepository {
         return client.newCall(request)
             .execute()
             .let { it.body?.string() ?: throw RuntimeException("body is null") }
-            .let { gson.fromJson(it, type) }
+            //.let { gson.fromJson(it, type) }
+            .let { gson.fromJson(it,Post::class.java) }
     }
 
     override fun shareById(id: Long) {
