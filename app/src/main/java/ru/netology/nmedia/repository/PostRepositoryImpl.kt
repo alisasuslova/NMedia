@@ -9,8 +9,9 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.internal.EMPTY_REQUEST
 import ru.netology.nmedia.dto.Post
 import java.util.concurrent.TimeUnit
+import kotlin.concurrent.thread
 
-// 54:53
+
 class PostRepositoryImpl : PostRepository {
 
     private val client = OkHttpClient.Builder()
@@ -51,7 +52,6 @@ class PostRepositoryImpl : PostRepository {
         return client.newCall(request)
             .execute()
             .let { it.body?.string() ?: throw RuntimeException("body is null") }
-            //.let { gson.fromJson(it, type) }
             .let { gson.fromJson(it,Post::class.java) }
     }
 
@@ -64,7 +64,6 @@ class PostRepositoryImpl : PostRepository {
         return client.newCall(request)
             .execute()
             .let { it.body?.string() ?: throw RuntimeException("body is null") }
-            //.let { gson.fromJson(it, type) }
             .let { gson.fromJson(it,Post::class.java) }
     }
 
@@ -73,15 +72,17 @@ class PostRepositoryImpl : PostRepository {
     }
 
     override fun removeById(id: Long) {
-        val request = Request.Builder()
-            .url("${BASE_URL}api/slow/posts/$id")
-            .delete()
-            .build()
 
-        client.newCall(request)
-            .execute()
-            .close()
+        thread {
+            val request = Request.Builder()
+                .url("${BASE_URL}api/slow/posts/$id")
+                .delete()
+                .build()
 
+            client.newCall(request)
+                .execute()
+                .close()
+        }
     }
 
     override fun save(post: Post): Post {
