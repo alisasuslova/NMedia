@@ -35,6 +35,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         load()
     }
 
+    /*//синхронный вариант с thread
     fun load() {
         // создаем фоновый поток
         thread {
@@ -49,6 +50,21 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                 }
             )
         }
+    }*/
+
+    //aсинхронный вариант с callback
+    fun load() {
+        _data.postValue(FeedModel(loading = true)) // в момент создания состояние загрузки включено
+
+        repository.getAllAsync(object: PostRepository.GetAllCallback{
+            override fun onSuccess(data: List<Post>) { // скачиваем посты, все успешно
+                _data.postValue(FeedModel(posts = data, empty = data.isEmpty()))
+            }
+
+            override fun onError(e: Exception) {
+                _data.postValue(FeedModel(error = true))
+            }
+        })
     }
 
     fun changeContentAndSave(text: String) {
