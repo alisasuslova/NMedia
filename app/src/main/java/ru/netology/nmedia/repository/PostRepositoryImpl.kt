@@ -2,16 +2,12 @@ package ru.netology.nmedia.repository
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import okhttp3.Call
-import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.Response
 import okhttp3.internal.EMPTY_REQUEST
 import ru.netology.nmedia.dto.Post
-import java.io.IOException
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
 
@@ -24,8 +20,6 @@ class PostRepositoryImpl : PostRepository {
 
     private val gson = Gson()
     private val type = object : TypeToken<List<Post>>() {}.type
-    private val typeToken = object : TypeToken<List<Post>>() {}
-
 
     companion object {
         private const val BASE_URL = "http://10.0.2.2:9998/"
@@ -33,7 +27,6 @@ class PostRepositoryImpl : PostRepository {
     }
 
 
-    //синхронный вызов и синхронный ответ
     override fun getAll(): List<Post> {
         //запрос на сервер
         val request = Request.Builder()
@@ -47,38 +40,6 @@ class PostRepositoryImpl : PostRepository {
         val responseText = response.body?.string() ?: error("response body is null")
         //перевели в список постов
         return  gson.fromJson(responseText, type)
-
-        //более короткий вариант:
-        /*return client.newCall(request)
-            .execute()
-            .let { it.body?.string() ?: throw RuntimeException("response body is null") }
-            .let { gson.fromJson(it, type) }*/
-
-    }
-
-    //асинхронный вызов и синхронный ответ
-    override fun getAllAsync(callback: PostRepository.GetAllCallback) {
-
-        val request = Request.Builder()
-            .url("${BASE_URL}api/slow/posts")
-            .build()
-
-        return client.newCall(request)
-            .enqueue(object : Callback {  // создаем анонимный объект
-                override fun onFailure(call: Call, e: IOException) { //вариант с ошибкой, передаем callback на уровень выше в getAllAsync(callback)
-                    callback.onError(e)
-                }
-
-                override fun onResponse(call: Call, response: Response) { //вариант успешный, получаем ответ с сервера
-                    try {
-                     callback.onSuccess(gson.fromJson(response.body?.string(), typeToken.type)) //переводим ответ в формат постов и возращаем callback на уровень выше в getAllAsync(callback)
-                    } catch (e: Exception) {
-                        callback.onError(e)
-                    }
-
-                }
-
-            })
 
     }
 
