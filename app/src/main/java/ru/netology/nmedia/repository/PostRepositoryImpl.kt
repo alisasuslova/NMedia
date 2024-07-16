@@ -33,7 +33,7 @@ class PostRepositoryImpl : PostRepository {
     }
 
 
-    override fun getAll(): List<Post> {
+    /*override fun getAll(): List<Post> {
         //запрос на сервер
         val request = Request.Builder()
             .url("${BASE_URL}api/slow/posts")
@@ -51,9 +51,7 @@ class PostRepositoryImpl : PostRepository {
             .execute()
             .let { it.body?.string() ?: throw RuntimeException("body is null")}
             .let { gson.fromJson(it, typeToken.type) }
-
-
-    }
+    }*/
 
     override fun getAllAsync(callback: PostRepository.NMediaCallback<List<Post>>) {
 
@@ -62,24 +60,21 @@ class PostRepositoryImpl : PostRepository {
             .build()
 
         return client.newCall(request)
-            .enqueue(object : Callback{
+            .enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     callback.onError(e) //ошибка
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                     //ответ сервера
+                    //ответ сервера
                     try {
                         callback.onSuccess(gson.fromJson(response.body?.string(), typeToken.type))
                     } catch (e: Exception) {
                         callback.onError(e) //ошибка
                     }
                     //Looper.getMainLooper() == Looper.myLooper() //false - не главный поток!
-
                 }
-
             })
-
     }
 
 
@@ -92,7 +87,7 @@ class PostRepositoryImpl : PostRepository {
         return client.newCall(request)
             .execute()
             .let { it.body?.string() ?: throw RuntimeException("body is null") }
-            .let { gson.fromJson(it,Post::class.java) }
+            .let { gson.fromJson(it, Post::class.java) }
     }
 
     override fun unlikeById(id: Long): Post {
@@ -104,7 +99,7 @@ class PostRepositoryImpl : PostRepository {
         return client.newCall(request)
             .execute()
             .let { it.body?.string() ?: throw RuntimeException("body is null") }
-            .let { gson.fromJson(it,Post::class.java) }
+            .let { gson.fromJson(it, Post::class.java) }
     }
 
     override fun shareById(id: Long) {
@@ -125,11 +120,13 @@ class PostRepositoryImpl : PostRepository {
         }
     }
 
-    override fun save(post: Post): Post {
+    /*override fun save(post: Post): Post {
 
         val request = Request.Builder()
             .url("${BASE_URL}api/slow/posts")
-            .post(gson.toJson(post).toRequestBody(jsonType)) //отправляем данные на сервер в виде текста
+            .post(
+                gson.toJson(post).toRequestBody(jsonType)
+            ) //отправляем данные на сервер в виде текста
             .build()
 
         val response = client.newCall(request)
@@ -137,14 +134,37 @@ class PostRepositoryImpl : PostRepository {
 
         val responseText = response.body?.string() ?: error("response body is null")
 
-        return  gson.fromJson(responseText, Post::class.java)
+        return gson.fromJson(responseText, Post::class.java)
+    }*/
+
+
+    override fun saveAsync(post: Post, callback: PostRepository.NMediaCallback<Post>) {
+        val request = Request.Builder()
+            .post(gson.toJson(post).toRequestBody(jsonType))
+            .url("${BASE_URL}api/slow/posts")
+            .build()
+
+        client.newCall(request)
+            .enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    callback.onError(e)
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    try {
+                        callback.onSuccess(gson.fromJson(response.body?.string(), Post::class.java))
+                    } catch (e: Exception) {
+                        callback.onError(e) //ошибка
+                    }
+                }
+            })
     }
+
+
 
     override fun playVideo(id: Long) {
         TODO("Not yet implemented")
     }
-
-
 
 
 }

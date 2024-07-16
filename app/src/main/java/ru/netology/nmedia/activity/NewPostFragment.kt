@@ -1,7 +1,5 @@
 package ru.netology.nmedia.activity
 
-import android.app.Activity.RESULT_CANCELED
-import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -34,7 +32,9 @@ class NewPostFragment : Fragment() {
             val intent = Intent()
 
             if(binding.content.text.isNotBlank()) {
-                viewModel.changeContentAndSave(binding.content.text.toString())
+                viewModel.changeContent(binding.content.text.toString())
+                viewModel.save()
+                //viewModel.changeContentAndSave()
 
             }
 

@@ -71,8 +71,24 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 
     }
 
-    fun changeContentAndSave(text: String) {
-        thread {
+    //fun changeContentAndSave(text: String) {
+        fun save() {
+        edited.value?.let {
+            repository.saveAsync(it, object :PostRepository.NMediaCallback<Post> {
+                override fun onSuccess(data: Post) {
+                    _postCreated.postValue(Unit)
+                    edited.postValue(empty)
+                }
+
+                override fun onError(e: Exception) {
+                    edited.postValue(empty)
+                }
+
+            })
+        }
+
+
+        /*thread {
             edited.value?.let {
                 if (it.content != text.trim()) {
                     repository.save(it.copy(content = text))
@@ -80,10 +96,10 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
             edited.postValue(empty)
-        }
+        }*/
     }
 
-    //
+
     //fun likeById(id: Long) {
     fun likeById(post: Post) {
         thread {
@@ -114,5 +130,13 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         edited.value = empty
     }
     fun playVideo(id: Long) = repository.playVideo(id)
+    fun changeContent(content: String) {
+        val text = content.trim()
+        if (edited.value?.content == text) {
+            return
+        }
+        edited.value = edited.value?.copy(content = text)
+    }
+
 }
 
