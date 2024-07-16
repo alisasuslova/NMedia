@@ -74,7 +74,7 @@ class PostRepositoryImpl : PostRepository {
                     } catch (e: Exception) {
                         callback.onError(e) //ошибка
                     }
-                    //24:21
+                    //Looper.getMainLooper() == Looper.myLooper() //false - не главный поток!
 
                 }
 
