@@ -55,7 +55,7 @@ class PostRepositoryImpl : PostRepository {
 
     }
 
-    override fun getAllAsync(callback: PostRepository.GetAllCallback) {
+    override fun getAllAsync(callback: PostRepository.NMediaCallback<List<Post>>) {
 
         val request = Request.Builder()
             .url("${BASE_URL}api/slow/posts")
@@ -143,6 +143,8 @@ class PostRepositoryImpl : PostRepository {
     override fun playVideo(id: Long) {
         TODO("Not yet implemented")
     }
+
+
 
 
 }

@@ -55,7 +55,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 
             _data.postValue(FeedModel(loading = true)) // в момент создания состояние загрузки включено
 
-            repository.getAllAsync(object: PostRepository.GetAllCallback{
+            repository.getAllAsync(object: PostRepository.NMediaCallback<List<Post>>{
                 override fun onSuccess(data: List<Post>) {
                     _data.postValue(FeedModel(posts = data, empty = data.isEmpty()))
                 }
@@ -63,7 +63,12 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                 override fun onError(e: Exception) {
                     _data.postValue(FeedModel(error = true))
                 }
+
             })
+
+
+
+
     }
 
     fun changeContentAndSave(text: String) {
