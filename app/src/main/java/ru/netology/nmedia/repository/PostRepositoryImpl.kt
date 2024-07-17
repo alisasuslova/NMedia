@@ -90,6 +90,30 @@ class PostRepositoryImpl : PostRepository {
             .let { gson.fromJson(it, Post::class.java) }
     }
 
+    //мой 1й вариант:
+    /*override fun likeByIdAsync(id: Long, callback: PostRepository.NMediaCallback<Post>) {
+        val request = Request.Builder()
+            .url("${BASE_URL}api/posts/$id/likes")
+            .post(EMPTY_REQUEST)
+            .build()
+
+        client.newCall(request)
+            .enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    callback.onError(e)
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    try {
+                        callback.onSuccess(gson.fromJson(response.body?.string(), Post::class.java))
+                    } catch (e: Exception) {
+                        callback.onError(e) //ошибка
+                    }
+                }
+            })
+    }*/
+
+
     override fun unlikeById(id: Long): Post {
         val request = Request.Builder()
             .url("${BASE_URL}api/posts/$id/likes")
@@ -106,7 +130,7 @@ class PostRepositoryImpl : PostRepository {
         TODO("Not yet implemented")
     }
 
-    override fun removeById(id: Long) {
+    /*override fun removeById(id: Long) {
 
         thread {
             val request = Request.Builder()
@@ -118,7 +142,39 @@ class PostRepositoryImpl : PostRepository {
                 .execute()
                 .close()
         }
+    }*/
+
+
+    override fun removeByIdAsync(id: Long, callback: PostRepository.NMediaCallback<Post>) {
+        thread {
+            val request = Request.Builder()
+                .url("${BASE_URL}api/slow/posts/$id")
+                .delete()
+                .build()
+
+            client.newCall(request)
+                .enqueue(object : Callback{
+                    override fun onFailure(call: Call, e: IOException) {
+                        callback.onError(e)
+                    }
+
+                    override fun onResponse(call: Call, response: Response) {
+                        try {
+                            callback.onSuccess(gson.fromJson(response.body?.string(), type))
+                        } catch (e: Exception) {
+                            callback.onError(e)
+                        }
+                    }
+
+                })
+        }
     }
+
+
+
+
+
+
 
     /*override fun save(post: Post): Post {
 
@@ -159,8 +215,6 @@ class PostRepositoryImpl : PostRepository {
                 }
             })
     }
-
-
 
     override fun playVideo(id: Long) {
         TODO("Not yet implemented")
