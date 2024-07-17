@@ -101,7 +101,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 
 
     //fun likeById(id: Long) {
-    fun likeById(post: Post) {
+    /*fun likeById(post: Post) {
         thread {
             val likedPost =
             if(post.likedByMe){
@@ -118,6 +118,29 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             }
             _data.postValue(_data.value?.copy(posts = updatePosts))
         }
+    }*/
+
+
+    fun likeById(post: Post) {
+         repository.likeByIdAsync(post, object : PostRepository.NMediaCallback<Post>{
+            override fun onSuccess(data: Post) {
+
+               _data.value?.posts.orEmpty().map {
+                   if(it.id == data.id) {
+                       data
+                   } else {
+                       it
+                   }
+               }
+
+            }
+
+            override fun onError(e: Exception) {
+                edited.postValue(empty)
+            }
+
+        })
+
     }
 
     fun shareById(id: Long) = repository.shareById(id)

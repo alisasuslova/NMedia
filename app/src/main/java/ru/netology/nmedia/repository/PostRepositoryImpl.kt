@@ -78,7 +78,7 @@ class PostRepositoryImpl : PostRepository {
     }
 
 
-    override fun likeById(id: Long): Post {
+    /*override fun likeById(id: Long): Post {
         val request = Request.Builder()
             .url("${BASE_URL}api/posts/$id/likes")
             .post(EMPTY_REQUEST)
@@ -88,17 +88,23 @@ class PostRepositoryImpl : PostRepository {
             .execute()
             .let { it.body?.string() ?: throw RuntimeException("body is null") }
             .let { gson.fromJson(it, Post::class.java) }
-    }
+    }*/
 
-    //мой 1й вариант:
-    /*override fun likeByIdAsync(id: Long, callback: PostRepository.NMediaCallback<Post>) {
-        val request = Request.Builder()
-            .url("${BASE_URL}api/posts/$id/likes")
-            .post(EMPTY_REQUEST)
-            .build()
 
-        client.newCall(request)
-            .enqueue(object : Callback {
+    override fun likeByIdAsync(post: Post, callback: PostRepository.NMediaCallback<Post>) {
+        val request = if(post.likedByMe) {
+            Request.Builder()
+                .url("${BASE_URL}api/slow/posts")
+                .build()
+        } else {
+            Request.Builder()
+                .url("${BASE_URL}api/posts/${post.id}/likes")
+                .post(EMPTY_REQUEST)
+                .build()
+        }
+
+        return client.newCall(request)
+            .enqueue(object : Callback{
                 override fun onFailure(call: Call, e: IOException) {
                     callback.onError(e)
                 }
@@ -107,14 +113,15 @@ class PostRepositoryImpl : PostRepository {
                     try {
                         callback.onSuccess(gson.fromJson(response.body?.string(), Post::class.java))
                     } catch (e: Exception) {
-                        callback.onError(e) //ошибка
+                        callback.onError(e)
                     }
                 }
+
             })
-    }*/
 
+    }
 
-    override fun unlikeById(id: Long): Post {
+    /*override fun unlikeById(id: Long): Post {
         val request = Request.Builder()
             .url("${BASE_URL}api/posts/$id/likes")
             .delete()
@@ -124,7 +131,7 @@ class PostRepositoryImpl : PostRepository {
             .execute()
             .let { it.body?.string() ?: throw RuntimeException("body is null") }
             .let { gson.fromJson(it, Post::class.java) }
-    }
+    }*/
 
     override fun shareById(id: Long) {
         TODO("Not yet implemented")
@@ -169,10 +176,6 @@ class PostRepositoryImpl : PostRepository {
                 })
         }
     }
-
-
-
-
 
 
 
