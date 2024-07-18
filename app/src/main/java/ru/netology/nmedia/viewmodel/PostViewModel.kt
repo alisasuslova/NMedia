@@ -151,26 +151,21 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     //fun removeById(id: Long) = repository.removeById(id)
     fun removeById(id: Long) {
         repository.removeByIdAsync(id, object : PostRepository.NMediaCallback<Unit> {
-            /*override fun onSuccess(data: Post) {
+            override fun onSuccess(data: Unit) {
                 _data.postValue(
                     _data.value?.copy
                         (posts = _data.value?.posts.orEmpty().filter {
                         it.id != id
                     })
                 )
-
-            }*/
-
-            override fun onSuccess(data: Unit) {
-                edited.postValue(empty)
             }
 
             override fun onError(e: Exception) {
-                _data.value
+                edited.postValue(empty)
             }
 
         })
-        load()
+       
     }
 
     fun editCancel() {
