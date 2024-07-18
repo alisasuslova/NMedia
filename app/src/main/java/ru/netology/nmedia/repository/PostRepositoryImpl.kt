@@ -94,7 +94,8 @@ class PostRepositoryImpl : PostRepository {
     override fun likeByIdAsync(post: Post, callback: PostRepository.NMediaCallback<Post>) {
         val request = if(post.likedByMe) {
             Request.Builder()
-                .url("${BASE_URL}api/slow/posts")
+                .url("${BASE_URL}api/posts/${post.id}/likes")
+                .delete()
                 .build()
         } else {
             Request.Builder()

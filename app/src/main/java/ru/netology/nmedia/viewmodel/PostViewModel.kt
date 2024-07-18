@@ -125,14 +125,15 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
          repository.likeByIdAsync(post, object : PostRepository.NMediaCallback<Post>{
             override fun onSuccess(data: Post) {
 
-               _data.value?.posts.orEmpty().map {
-                   if(it.id == data.id) {
-                       data
-                   } else {
-                       it
-                   }
-               }
-
+                _data.postValue(
+                    _data.value?.copy(posts = _data.value?.posts.orEmpty().map {
+                        if (it.id == data.id) {
+                            data
+                        } else {
+                            it
+                        }
+                    })
+                )
             }
 
             override fun onError(e: Exception) {
