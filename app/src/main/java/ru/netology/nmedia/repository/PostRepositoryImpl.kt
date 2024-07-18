@@ -152,7 +152,7 @@ class PostRepositoryImpl : PostRepository {
     }*/
 
 
-    override fun removeByIdAsync(id: Long, callback: PostRepository.NMediaCallback<Post>) {
+    override fun removeByIdAsync(id: Long, callback: PostRepository.NMediaCallback<Unit>) {
         thread {
             val request = Request.Builder()
                 .url("${BASE_URL}api/slow/posts/$id")
@@ -167,7 +167,7 @@ class PostRepositoryImpl : PostRepository {
 
                     override fun onResponse(call: Call, response: Response) {
                         try {
-                            callback.onSuccess(gson.fromJson(response.body?.string(), type))
+                            callback.onSuccess(Unit)
                         } catch (e: Exception) {
                             callback.onError(e)
                         }
