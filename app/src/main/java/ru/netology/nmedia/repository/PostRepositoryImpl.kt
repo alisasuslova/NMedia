@@ -1,5 +1,6 @@
 package ru.netology.nmedia.repository
 
+import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.Call
@@ -26,34 +27,15 @@ class PostRepositoryImpl : PostRepository {
     private val type = object : TypeToken<List<Post>>() {}.type
     private val typeToken = object : TypeToken<List<Post>>() {}
 
+    private val urls = listOf("netology.jpg", "sber.jpg", "tcs.jpg")
+
     companion object {
         private const val BASE_URL = "http://10.0.2.2:9998/"
         private val jsonType = "application/json".toMediaType()
 
     }
 
-
-    /*override fun getAll(): List<Post> {
-        //запрос на сервер
-        val request = Request.Builder()
-            .url("${BASE_URL}api/slow/posts")
-            .build()
-
-        /*//ответ
-        val response = client.newCall(request)
-            .execute()
-        // получили тело запроса в виде строки
-        val responseText = response.body?.string() ?: error("response body is null")
-        //перевели в список постов
-        return  gson.fromJson(responseText, type)*/
-
-        return client.newCall(request)
-            .execute()
-            .let { it.body?.string() ?: throw RuntimeException("body is null")}
-            .let { gson.fromJson(it, typeToken.type) }
-    }*/
-
-    override fun getAllAsync(callback: PostRepository.NMediaCallback<List<Post>>) {
+    /*override fun getAllAsync(callback: PostRepository.NMediaCallback<List<Post>>) {
 
         val request = Request.Builder()
             .url("${BASE_URL}api/slow/posts")
@@ -75,21 +57,32 @@ class PostRepositoryImpl : PostRepository {
                     //Looper.getMainLooper() == Looper.myLooper() //false - не главный поток!
                 }
             })
-    }
+    }*/
 
+    override fun getAllAsync(callback: PostRepository.NMediaCallback<List<Post>>) {
 
-    /*override fun likeById(id: Long): Post {
         val request = Request.Builder()
-            .url("${BASE_URL}api/posts/$id/likes")
-            .post(EMPTY_REQUEST)
+            .url("${BASE_URL}api/slow/posts")
             .build()
 
         return client.newCall(request)
-            .execute()
-            .let { it.body?.string() ?: throw RuntimeException("body is null") }
-            .let { gson.fromJson(it, Post::class.java) }
-    }*/
+            .enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    callback.onError(e) //ошибка
+                }
 
+                override fun onResponse(call: Call, response: Response) {
+                    //ответ сервера
+                    try {
+                        callback.onSuccess(gson.fromJson(response.body?.string(), typeToken.type))
+
+                    } catch (e: Exception) {
+                        callback.onError(e) //ошибка
+                    }
+                    //Looper.getMainLooper() == Looper.myLooper() //false - не главный поток!
+                }
+            })
+    }
 
     override fun likeByIdAsync(post: Post, callback: PostRepository.NMediaCallback<Post>) {
         val request = if(post.likedByMe) {
@@ -122,35 +115,9 @@ class PostRepositoryImpl : PostRepository {
 
     }
 
-    /*override fun unlikeById(id: Long): Post {
-        val request = Request.Builder()
-            .url("${BASE_URL}api/posts/$id/likes")
-            .delete()
-            .build()
-
-        return client.newCall(request)
-            .execute()
-            .let { it.body?.string() ?: throw RuntimeException("body is null") }
-            .let { gson.fromJson(it, Post::class.java) }
-    }*/
-
     override fun shareById(id: Long) {
         TODO("Not yet implemented")
     }
-
-    /*override fun removeById(id: Long) {
-
-        thread {
-            val request = Request.Builder()
-                .url("${BASE_URL}api/slow/posts/$id")
-                .delete()
-                .build()
-
-            client.newCall(request)
-                .execute()
-                .close()
-        }
-    }*/
 
 
     override fun removeByIdAsync(id: Long, callback: PostRepository.NMediaCallback<Unit>) {
@@ -177,25 +144,6 @@ class PostRepositoryImpl : PostRepository {
                 })
         }
     }
-
-
-
-    /*override fun save(post: Post): Post {
-
-        val request = Request.Builder()
-            .url("${BASE_URL}api/slow/posts")
-            .post(
-                gson.toJson(post).toRequestBody(jsonType)
-            ) //отправляем данные на сервер в виде текста
-            .build()
-
-        val response = client.newCall(request)
-            .execute()
-
-        val responseText = response.body?.string() ?: error("response body is null")
-
-        return gson.fromJson(responseText, Post::class.java)
-    }*/
 
 
     override fun saveAsync(post: Post, callback: PostRepository.NMediaCallback<Post>) {
