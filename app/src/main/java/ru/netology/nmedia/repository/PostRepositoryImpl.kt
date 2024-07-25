@@ -1,25 +1,16 @@
 package ru.netology.nmedia.repository
 
-import com.bumptech.glide.Glide
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.Response
-import okhttp3.internal.EMPTY_REQUEST
+
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import ru.netology.nmedia.api.ApiService
 import ru.netology.nmedia.dto.Post
-import java.io.IOException
-import java.util.concurrent.TimeUnit
-import kotlin.concurrent.thread
 
 
 class PostRepositoryImpl : PostRepository {
 
-    private val client = OkHttpClient.Builder()
+    /*private val client = OkHttpClient.Builder()
         .connectTimeout(30, TimeUnit.SECONDS)
         .build()
 
@@ -30,11 +21,21 @@ class PostRepositoryImpl : PostRepository {
     private val urls = listOf("netology.jpg", "sber.jpg", "tcs.jpg")
 
     companion object {
-        private const val BASE_URL = "http://10.0.2.2:9998/"
+        //private const val BASE_URL = "http://10.0.2.2:9998/"
         private val jsonType = "application/json".toMediaType()
+
+    }*/
+
+    //стало:
+    override fun getAll(): List<Post> {
+
+        return ApiService.service.getAll()
+            .execute()
+            .let { it.body() ?: throw RuntimeException("Body is null") }
 
     }
 
+    //было:
     /*override fun getAllAsync(callback: PostRepository.NMediaCallback<List<Post>>) {
 
         val request = Request.Builder()
@@ -51,6 +52,7 @@ class PostRepositoryImpl : PostRepository {
                     //ответ сервера
                     try {
                         callback.onSuccess(gson.fromJson(response.body?.string(), typeToken.type))
+
                     } catch (e: Exception) {
                         callback.onError(e) //ошибка
                     }
@@ -59,33 +61,33 @@ class PostRepositoryImpl : PostRepository {
             })
     }*/
 
+    //стало:
     override fun getAllAsync(callback: PostRepository.NMediaCallback<List<Post>>) {
 
-        val request = Request.Builder()
-            .url("${BASE_URL}api/slow/posts")
-            .build()
+        ApiService.service
+            .getAll()
+            .enqueue(object : Callback<List<Post>> {
+                override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
 
-        return client.newCall(request)
-            .enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                    callback.onError(e) //ошибка
+                    if(!response.isSuccessful) { //проверка кода на вхождение в диапозон 200..300
+                        callback.onError(RuntimeException(response.message()))
+                        return
+                    }
+                    val body: List<Post> = response.body() ?: throw RuntimeException("Body is null")
+                    callback.onSuccess(body)
                 }
 
-                override fun onResponse(call: Call, response: Response) {
-                    //ответ сервера
-                    try {
-                        callback.onSuccess(gson.fromJson(response.body?.string(), typeToken.type))
-
-                    } catch (e: Exception) {
-                        callback.onError(e) //ошибка
-                    }
-                    //Looper.getMainLooper() == Looper.myLooper() //false - не главный поток!
+                override fun onFailure(call: Call<List<Post>>, t: Throwable) {
+                    callback.onError(Exception(t))
                 }
             })
     }
 
+
     override fun likeByIdAsync(post: Post, callback: PostRepository.NMediaCallback<Post>) {
-        val request = if(post.likedByMe) {
+        TODO("Not yet implemented")
+
+        /*val request = if(post.likedByMe) {
             Request.Builder()
                 .url("${BASE_URL}api/posts/${post.id}/likes")
                 .delete()
@@ -111,7 +113,7 @@ class PostRepositoryImpl : PostRepository {
                     }
                 }
 
-            })
+            })*/
 
     }
 
@@ -119,8 +121,8 @@ class PostRepositoryImpl : PostRepository {
         TODO("Not yet implemented")
     }
 
-
-    override fun removeByIdAsync(id: Long, callback: PostRepository.NMediaCallback<Unit>) {
+    //было:
+    /*override fun removeByIdAsync(id: Long, callback: PostRepository.NMediaCallback<Unit>) {
         thread {
             val request = Request.Builder()
                 .url("${BASE_URL}api/slow/posts/$id")
@@ -143,10 +145,16 @@ class PostRepositoryImpl : PostRepository {
 
                 })
         }
+    }*/
+
+    //стало:
+    override fun removeByIdAsync(id: Long, callback: PostRepository.NMediaCallback<Unit>) {
+        ApiService.service.removeById(id)
+            .execute()
     }
 
-
-    override fun saveAsync(post: Post, callback: PostRepository.NMediaCallback<Post>) {
+    //было:
+    /*override fun saveAsync(post: Post, callback: PostRepository.NMediaCallback<Post>) {
         val request = Request.Builder()
             .post(gson.toJson(post).toRequestBody(jsonType))
             .url("${BASE_URL}api/slow/posts")
@@ -166,6 +174,14 @@ class PostRepositoryImpl : PostRepository {
                     }
                 }
             })
+    }*/
+
+
+    //стало:
+    override fun saveAsync(post: Post, callback: PostRepository.NMediaCallback<Post>) {
+
+        ApiService.service.savePost(post)
+            .execute()
     }
 
     override fun playVideo(id: Long) {

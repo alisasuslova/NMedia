@@ -12,7 +12,7 @@ interface PostRepository {
     //fun save(post: Post) : Post
     fun playVideo(id: Long)
 
-    //fun getAll(): List<Post>
+    fun getAll(): List<Post>
     //fun getAllAsync(callback: GetAllCallback)
     /*interface GetAllCallback {
         fun onSuccess(data: List<Post>)
