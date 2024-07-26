@@ -20,7 +20,7 @@ private const val BASE_URL = "${BuildConfig.BASE_URL}api/slow/"
 private val client = OkHttpClient.Builder()
     .connectTimeout(30, TimeUnit.SECONDS)
     .run {
-        if (BuildConfig.DEBUG) { //добавляется логироване только в режиме DEBUG/ package:mine 
+        if (BuildConfig.DEBUG) { //добавляется логироване только в режиме DEBUG/ package:mine
             addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             })
