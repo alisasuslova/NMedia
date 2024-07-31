@@ -122,27 +122,41 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     }*/
 
 
-    fun likeById(post: Post) {
-         repository.likeByIdAsync(post, object : PostRepository.NMediaCallback<Post>{
-            override fun onSuccess(data: Post) {
+    fun likeById(id: Long) {
+        repository.likeById(id, object : PostRepository.NMediaCallback<Post> {
+            override fun onError(e: Exception) {
+                _data.postValue(_data.value?.copy(error = true))
+            }
 
+            override fun onSuccess(posts: Post) {
                 _data.postValue(
-                    _data.value?.copy(posts = _data.value?.posts.orEmpty().map {
-                        if (it.id == data.id) {
-                            data
-                        } else {
-                            it
+                    _data.value?.copy(posts = _data.value?.posts.orEmpty()
+                        .map {
+                            if (it.id == id) posts else it
                         }
-                    })
+                    )
                 )
             }
-
-            override fun onError(e: Exception) {
-                edited.postValue(empty)
-            }
-
         })
 
+    }
+
+    fun unlikeById(id: Long) {
+        repository.unlikeById(id, object : PostRepository.NMediaCallback<Post> {
+            override fun onError(e: Exception) {
+                _data.postValue(_data.value?.copy(error = true))
+            }
+
+            override fun onSuccess(posts: Post) {
+                _data.postValue(
+                    _data.value?.copy(posts = _data.value?.posts.orEmpty()
+                        .map {
+                            if (it.id == id) posts else it
+                        }
+                    )
+                )
+            }
+        })
     }
 
     fun shareById(id: Long) = repository.shareById(id)

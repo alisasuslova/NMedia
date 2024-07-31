@@ -31,5 +31,8 @@ interface PostRepository {
 
     fun removeByIdAsync(id: Long, callback: NMediaCallback <Unit>)
 
-    fun likeByIdAsync(post: Post, callback: NMediaCallback <Post>)  // likeById + unlikeById
+    //fun likeByIdAsync(post: Post, callback: NMediaCallback <Post>)  // likeById + unlikeById
+
+    fun likeById(id: Long, callback: PostRepository.NMediaCallback<Post>)
+    fun unlikeById(id: Long, callback: PostRepository.NMediaCallback<Post>)
 }

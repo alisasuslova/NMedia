@@ -83,11 +83,49 @@ class PostRepositoryImpl : PostRepository {
             })
     }
 
+    override fun likeById(id: Long, callback: PostRepository.NMediaCallback<Post>) {
+        ApiService.service.likeById(id)
+            .enqueue(object : Callback<Post> {
+                override fun onResponse(call: Call<Post>, response: Response<Post>) {
+                    if (!response.isSuccessful) {
+                        callback.onError(RuntimeException(response.message()))
+                    } else {
+                        callback.onSuccess(
+                            response.body() ?: throw RuntimeException("body is null")
+                        )
+                    }
+                }
 
-    override fun likeByIdAsync(post: Post, callback: PostRepository.NMediaCallback<Post>) {
+                override fun onFailure(call: Call<Post>, t: Throwable) {
+                    callback.onError(Exception(t))
+                }
+            })
+    }
+
+    override fun unlikeById(id: Long, callback: PostRepository.NMediaCallback<Post>) {
+        ApiService.service.unlikeById(id)
+            .enqueue(object : Callback<Post> {
+                override fun onResponse(call: Call<Post>, response: Response<Post>) {
+                    if (!response.isSuccessful) {
+                        callback.onError(RuntimeException(response.message()))
+                    } else {
+                        callback.onSuccess(
+                            response.body() ?: throw RuntimeException("body is null")
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<Post>, t: Throwable) {
+                    callback.onError(Exception(t))
+                }
+            })
+    }
+
+
+    /*override fun likeByIdAsync(post: Post, callback: PostRepository.NMediaCallback<Post>) {
         TODO("Not yet implemented")
 
-        /*val request = if(post.likedByMe) {
+        *//*val request = if(post.likedByMe) {
             Request.Builder()
                 .url("${BASE_URL}api/posts/${post.id}/likes")
                 .delete()
@@ -113,9 +151,9 @@ class PostRepositoryImpl : PostRepository {
                     }
                 }
 
-            })*/
+            })*//*
 
-    }
+    }*/
 
     override fun shareById(id: Long) {
         TODO("Not yet implemented")
