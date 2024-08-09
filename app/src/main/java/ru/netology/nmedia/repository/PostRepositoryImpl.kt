@@ -1,6 +1,7 @@
 package ru.netology.nmedia.repository
 
 
+import android.widget.Toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -69,11 +70,19 @@ class PostRepositoryImpl : PostRepository {
             .enqueue(object : Callback<List<Post>> {
                 override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
 
-                    if(!response.isSuccessful) { //проверка кода на вхождение в диапозон 200..300
+                    if(!response.isSuccessful) { //проверка кода на вхождение в диапозон 200..299
+                        //response.message() - статус сообщения ответа
+                        //response.code() - статус код ответа
+                        //response.errorBody() - raw-body ответа
                         callback.onError(RuntimeException(response.message()))
+                        Toast.makeText(this@PostRepositoryImpl, "Not Success! Install app falled as usual…", Toast.LENGTH_LONG).show()
                         return
                     }
+
                     val body: List<Post> = response.body() ?: throw RuntimeException("Body is null")
+                    //response.headers() - заголовки ответа
+                    //response.raw() - необработанное тело ответа
+                    //response.body() - приведенное с помощью конвертера к <List<Post>>
                     callback.onSuccess(body)
                 }
 
