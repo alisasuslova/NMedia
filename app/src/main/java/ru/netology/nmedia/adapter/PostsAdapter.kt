@@ -69,7 +69,7 @@ class PostViewHolder(
             }
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
-                    inflate(R.menu.options_post)
+                    inflate(R.menu.option_post)
                     setOnMenuItemClickListener {item ->
                         when(item.itemId) {
                             R.id.edit -> {
