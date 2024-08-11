@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -28,7 +29,7 @@ class FeedFragment : Fragment() {
         val binding = FragmentFeedBinding.inflate(inflater, container, false)
 
         val viewModel: PostViewModel by viewModels(
-            ownerProducer = :: requireParentFragment
+            ownerProducer = ::requireParentFragment
         )
 
 
@@ -85,7 +86,7 @@ class FeedFragment : Fragment() {
 
         binding.list.adapter = adapter
 
-        viewModel.data.observe(viewLifecycleOwner){ model ->
+        viewModel.data.observe(viewLifecycleOwner) { model ->
             binding.editGroup.isVisible = model.error
             //binding.errorGroup.isVisible = model.error
             //binding.emptyState.isVisible = model.empty
@@ -100,6 +101,10 @@ class FeedFragment : Fragment() {
 
         binding.retry.setOnClickListener {
             viewModel.load()
+        }
+
+        viewModel.error.observe(viewLifecycleOwner) { message ->
+            Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
         }
 
 

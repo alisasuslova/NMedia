@@ -9,7 +9,6 @@ import ru.netology.nmedia.model.FeedModel
 import ru.netology.nmedia.repository.PostRepository
 import ru.netology.nmedia.repository.PostRepositoryImpl
 import ru.netology.nmedia.util.SingleLiveEvent
-import kotlin.concurrent.thread
 
 private val empty = Post(
     id = 0,
@@ -42,21 +41,6 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         load()
     }
 
-    /*fun load() {
-        // создаем фоновый поток
-        thread {
-            _data.postValue(FeedModel(loading = true)) // в момент создания состояние загрузки включено
-
-            _data.postValue(
-                try {
-                    val posts = repository.getAll()
-                    FeedModel(posts = posts, empty = posts.isEmpty()) // скачиваем посты, все успешно
-                } catch (e: Exception) {
-                    (FeedModel(error = true)) // если ошибка
-                }
-            )
-        }
-    }*/
 
     fun load() {
 
@@ -72,9 +56,6 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                 }
 
             })
-
-
-
 
     }
 
@@ -93,39 +74,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 
             })
         }
-
-
-        /*thread {
-            edited.value?.let {
-                if (it.content != text.trim()) {
-                    repository.save(it.copy(content = text))
-                    _postCreated.postValue(Unit)
-                }
-            }
-            edited.postValue(empty)
-        }*/
     }
-
-
-    //fun likeById(id: Long) {
-    /*fun likeById(post: Post) {
-        thread {
-            val likedPost =
-            if(post.likedByMe){
-                repository.unlikeById(post.id)
-            } else {
-                repository.likeById(post.id)
-            }
-            val updatePosts = _data.value?.posts.orEmpty().map {
-                if(it.id == likedPost.id) {
-                    likedPost
-                } else {
-                    it
-                }
-            }
-            _data.postValue(_data.value?.copy(posts = updatePosts))
-        }
-    }*/
 
 
     fun likeById(id: Long) {
@@ -150,7 +99,8 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     fun unlikeById(id: Long) {
         repository.unlikeById(id, object : PostRepository.NMediaCallback<Post> {
             override fun onError(e: Exception) {
-                _data.postValue(_data.value?.copy(error = true))
+                //_data.postValue(_data.value?.copy(error = true))
+                error(e.message)
             }
 
             override fun onSuccess(posts: Post) {
