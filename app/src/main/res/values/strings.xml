@@ -26,5 +26,7 @@
     <string name="network_error">Network_error</string>
     <string name="no_posts">No_posts</string>
     <string name="retry">Retry</string>
+    <string name="failed_refresh_news" translatable="false">Filed to refresh news feed</string>
+    <string name="google_play_unavailable" translatable="false">Google Api Unavailable</string>
 
 </resources>

@@ -2,11 +2,14 @@ package ru.netology.nmedia.repository
 
 
 import android.widget.Toast
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import ru.netology.nmedia.R
 import ru.netology.nmedia.api.ApiService
 import ru.netology.nmedia.dto.Post
+
 
 
 class PostRepositoryImpl : PostRepository {
@@ -74,8 +77,8 @@ class PostRepositoryImpl : PostRepository {
                         //response.message() - статус сообщения ответа
                         //response.code() - статус код ответа
                         //response.errorBody() - raw-body ответа
-                        callback.onError(RuntimeException(response.message()))
-                        Toast.makeText(this@PostRepositoryImpl, "Not Success! Install app falled as usual…", Toast.LENGTH_LONG).show()
+                       // callback.onError(RuntimeException(response.message()))
+                        callback.onError(throw RuntimeException("Error"))
                         return
                     }
 

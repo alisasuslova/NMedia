@@ -32,6 +32,12 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         get() = _postCreated
     val edited = MutableLiveData(empty)
 
+
+    private val _error = SingleLiveEvent<String>()
+    val error: LiveData<String>
+        get() = _error
+
+
     init {
         load()
     }
@@ -193,6 +199,14 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             return
         }
         edited.value = edited.value?.copy(content = text)
+    }
+
+
+
+    private fun error(error: String?) {
+        error.let {
+            _error.postValue(it)
+        }
     }
 
 }

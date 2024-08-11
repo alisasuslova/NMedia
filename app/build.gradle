@@ -45,6 +45,8 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.android.gms:play-services-base:18.5.0'
+    implementation 'com.google.firebase:firebase-messaging-ktx:24.0.0'
     def core_version = "1.13.1"
     def appcompat_version = "1.7.0"
     def mdc_version = "1.12.0"
