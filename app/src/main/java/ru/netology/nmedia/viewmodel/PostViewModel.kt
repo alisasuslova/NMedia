@@ -80,7 +80,8 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     fun likeById(id: Long) {
         repository.likeById(id, object : PostRepository.NMediaCallback<Post> {
             override fun onError(e: Exception) {
-                _data.postValue(_data.value?.copy(error = true))
+                //_data.postValue(_data.value?.copy(error = true))
+                error(e.message)
             }
 
             override fun onSuccess(posts: Post) {

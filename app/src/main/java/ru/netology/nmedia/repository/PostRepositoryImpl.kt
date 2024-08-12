@@ -26,19 +26,12 @@ class PostRepositoryImpl : PostRepository {
             .enqueue(object : Callback<List<Post>> {
                 override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
 
-                    if(!response.isSuccessful) { //проверка кода на вхождение в диапозон 200..299
-                        //response.message() - статус сообщения ответа
-                        //response.code() - статус код ответа
-                        //response.errorBody() - raw-body ответа
-                       // callback.onError(RuntimeException(response.message()))
-                        callback.onError(throw RuntimeException("Error"))
+                    if(!response.isSuccessful) {
+                        callback.onError(RuntimeException("Error code ${response.code()}."))
                         return
                     }
 
                     val body: List<Post> = response.body() ?: throw RuntimeException("Body is null")
-                    //response.headers() - заголовки ответа
-                    //response.raw() - необработанное тело ответа
-                    //response.body() - приведенное с помощью конвертера к <List<Post>>
                     callback.onSuccess(body)
                 }
 
